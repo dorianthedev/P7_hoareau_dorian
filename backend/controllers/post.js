@@ -5,7 +5,7 @@ const mysqlconnection = require('../db/db.mysql');
 exports.getAllPost =async (req, res) => {
     try {
         const post = await mysqlconnection.query(
-            "SELECT * FROM `post` WHERE 1",
+            "SELECT * FROM `post` WHERE ?", ["1"],
             (error, results) => {
                 if (error) {
                     res.json({error});
