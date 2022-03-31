@@ -19,9 +19,9 @@ const authentification = require('../middlewares/authentification');
 // les routes
 // router.post('/', postController.createPost); // créer une sauce
 
-router.get('/', authentification, postController.getAllPost); // afficher tout les objets
+router.get('/', authentification, postController.getAllPost); // afficher tout les post
 
-// router.get('/:id',authentification, saucesController.getOneSauce); // afficher une sauce unique grâce à son id
+router.get('/:id', authentification, postController.getOnePost); // afficher un post unique grâce à son id
 
 // router.put('/:id',authentification, multer, saucesController.updateOneSauce) // modifier une sauce grâce à son id
 
