@@ -13,6 +13,10 @@ const result = dotenv.config();
 const mysqlconnection = require('../db/db.mysql');
 
 
+const fs = require('fs');
+const { log } = require('console');
+
+
 //--------------------EXPORTS.---------------------//
 
 
@@ -158,7 +162,77 @@ exports.login = (req, res, next) => {
 
 };
 
+exports.deleteUserEtContent = async (req, res, next) => {
 
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, `${process.env.JWT_KEY_TOKEN}`);        
+    const userId = decodedToken.userId;
+    console.log("userid delete user delete");
+    console.log(userId);
+
+    try {
+        const id = req.params.id;
+        console.log("--->id");
+        console.log(id);
+
+        // SELECT * FROM `post` WHERE `id_post` = 1
+        const querySql = " SELECT * FROM user WHERE id = ?"
+        const post = await mysqlconnection.query(querySql, [id],
+            (error, results) => {
+                if (error) {
+                    res.json({error});
+                } else {
+                    // controle si objet dans la base de donnée
+                    console.log("---------reeeeeeeeeee");
+                    console.log(results);
+                    
+                    if (results != 0) {
+                        console.log("presence objets dans la bd");
+                    } else {
+                        console.log("objet non present dans la bd");
+                        return res.status(404).json({message : "pas d'objet à supprimer dans la bdd"})
+                    }
+
+                    // controle autorisation de la modif par userId
+
+                    if (userId == id) {
+                        console.log("authorisation pour delete le user");
+
+                        // supprime l'image de notre server aussi
+
+                            const querySqlDelete = `
+                            DELETE FROM user
+                            WHERE id = ?
+                            `;
+
+                            const valuesDelete = [id];
+                            mysqlconnection.query(querySqlDelete, valuesDelete, (error, results) => {
+                                if (error) {
+                                    res.status(500).json({error});
+                                } else {
+                                    res.status(201).json({message : "mise à jour OK dnas la base de données", results});
+                                }
+                            });
+
+                        
+
+                    } else {
+                        console.log("userId different de l'userId dans db");
+                        res.status(403).json({message: " vous n'êtes pas autorisé à modifier les données"})
+                    }
+                    
+
+                        
+                }
+            }
+        );
+        
+        
+    } catch (error) {
+        res.status(500).json({error})
+    }
+
+}
 
 
 

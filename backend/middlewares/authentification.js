@@ -15,15 +15,32 @@ module.exports = (req, res, next) => {
       const userId = decodedToken.userId;
         console.log("decoded token");
         console.log(decodedToken);
+
+      userIdParamsUrl = req.originalUrl.split("=")[1];
+      console.log("----> affichage de l'userId auth");
+      console.log(userIdParamsUrl);
         
 
-      if (req.body.userId == userId) {
+      if (req._body === true) {
+        if (req.body.userId == userId) {
+          next();
+        } else {
+          throw 'Invalid user ID';
+
+        }
+      } else if(userIdParamsUrl == userId) {
         next();
-        
-      } else {
-        throw 'Invalid user ID';
-
+      }else {
+        throw 'erreur id url params form-data';
       }
+
+      // if (req.body.userId == userId) {
+      //   next();
+        
+      // } else {
+      //   throw 'Invalid user ID';
+
+      // }
     } catch {
       res.status(401).json({
         message: "Echec d'authentification",
@@ -31,3 +48,5 @@ module.exports = (req, res, next) => {
       });
     }
   };
+
+  

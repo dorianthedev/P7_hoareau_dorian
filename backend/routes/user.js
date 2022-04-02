@@ -13,6 +13,11 @@ router.post("/signup", password, userController.signup);
 //la route (endpoint) login
 router.post("/login", userController.login);
 
+//la route delete user et ses post
+router.delete("/:id", userController.deleteUserEtContent);
+
+
+
 
 //exportation du module
 module.exports = router;

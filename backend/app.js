@@ -46,7 +46,7 @@ app.use(express.json());
     app.use('/api/post', postRoutes)
 
 //pour accéder aux images du dossier images
-    // app.use('/images', express.static(path.join(__dirname, 'images')));
+    app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
 // exportation de app.js pour y accéder depuis un autre fichier
