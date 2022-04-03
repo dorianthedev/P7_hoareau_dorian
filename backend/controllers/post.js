@@ -66,30 +66,35 @@ exports.createPost = async (req, res, next) => {
         post_image: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
         };
 
-    
+        userIdParamsUrl = req.originalUrl.split("=")[1];
+        console.log("----> affichage de l'userId auth");
+        console.log(userIdParamsUrl);
 
-    mysqlconnection.query(
-        'INSERT INTO post SET ?', post, (error, results, fields) => {
-            if (error) {
-                console.log(error);
-                res.json({error});
-            } else {
-                console.log("----> resultats");
-                console.log(results);
-                res.json({message : "Ton post est posté"})
+    
+    if (userIdParamsUrl == post_userId ) {
+        mysqlconnection.query(
+            'INSERT INTO post SET ?', post, (error, results, fields) => {
+                if (error) {
+                    console.log(error);
+                    res.json({error});
+                } else {
+                    console.log("----> resultats");
+                    console.log(results);
+                    res.json({message : "Ton post est posté"})
+                }
             }
-        }
-    )
-
-    
-    
+        )
+        
+    } else {
+        res.status(403).json({message: " vous n'êtes pas autorisé"})
+    }
+   
 }
 
 
 
 exports.updatePost = async (req, res, next) => {
     console.log("route put : updatePost");
-    console.log(req.query.userId);
 
     //aller chercher la table dans post
     try {
@@ -107,10 +112,11 @@ exports.updatePost = async (req, res, next) => {
                 } else {
                     console.log("selection de l'objet que l'on veut modifier");
                     console.log(results);
+                    userIdParamsUrl = req.originalUrl.split("=")[1];
+                        console.log(userIdParamsUrl);
 
                     // controle autorisation de la modif par userId
-                    console.log("--> userIdParamsUrl et post_userId route put");
-                    console.log(userIdParamsUrl);
+                    
                     console.log("--> userIdParamsUrl et post_userId route put");
                     console.log(results[0].post_userId);
 
@@ -228,6 +234,10 @@ exports.deletePost = async (req, res, next) => {
                     }
 
                     // controle autorisation de la modif par userId
+
+                    userIdParamsUrl = req.originalUrl.split("=")[1];
+                    console.log(userIdParamsUrl);
+
 
                     if (userIdParamsUrl == results[0].post_userId) {
                         console.log("authorisation pour delete");

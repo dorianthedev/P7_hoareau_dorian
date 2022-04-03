@@ -21,17 +21,10 @@ module.exports = (req, res, next) => {
       console.log(userIdParamsUrl);
         
 
-      if (req._body === true) {
-        if (req.body.userId == userId) {
-          next();
-        } else {
-          throw 'Invalid user ID';
-
-        }
-      } else if(userIdParamsUrl == userId) {
+      if(userIdParamsUrl == userId) {
         next();
       }else {
-        throw 'erreur id url params form-data';
+        throw 'non autorisé';
       }
 
       // if (req.body.userId == userId) {

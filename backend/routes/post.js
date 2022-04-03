@@ -29,7 +29,7 @@ router.put('/:id',authentification, multer, postController.updatePost) // modifi
 
 router.delete('/:id',authentification, postController.deletePost) // supprimer une sauce grâce à son id
 
-router.post('/:id/commments',authentification, commentsController.createComments)
+router.post('/:id/comments',authentification, commentsController.createComments)
 
 // exportation du module
 module.exports = router;
