@@ -35,9 +35,70 @@ exports.createComments = (req, res, next) => {
                 }
             }
           )
+}
 
 
-        
+exports.deleteComments = (req, res, next) => {
 
+  try {
+    const id = req.params.id;
+    console.log("--->id");
+    console.log(id);
+
+    // SELECT * FROM `post` WHERE `id_post` = 1
+    const querySql = " SELECT * FROM comments WHERE id_comments = ?"
+    const post = mysqlconnection.query(querySql, [id],
+        (error, results) => {
+            if (error) {
+                res.json({error});
+            } else {
+                // controle si objet dans la base de donnée
+
+                if (results != 0) {
+                    console.log("presence objets dans la bd");
+                } else {
+                    console.log("objet non present dans la bd");
+                    return res.status(404).json({message : "pas d'objet à supprimer dans la bdd"})
+                }
+
+                // controle autorisation de la modif par userId
+
+                const userIdLocals = res.locals.userId;
+
+                if (userIdLocals == results[0].comments_userId) {
+                    console.log("authorisation pour delete");
+
+                    // supprime l'image de notre server aussi
+                        const querySqlDelete = `
+                        DELETE FROM comments
+                        WHERE id_comments = ?
+                        `;
+
+                        const valuesDelete = [id];
+                        
+                        mysqlconnection.query(querySqlDelete, valuesDelete, (error, results) => {
+                            if (error) {
+                                res.status(500).json({error});
+                            } else {
+                                res.status(201).json({message : "OK SUPPRIMER commentaires dans la base de données", results});
+                            }
+                        });
+                    
+                } else {
+                    console.log("userId different de l'userId dans db");
+                    res.status(403).json({message: " vous n'êtes pas autorisé à UPPRIMER les données"})
+                }
+            }
+        }
+    );
     
+  } catch (error) {
+      res.status(500).json({error})
+  }
+
+
+  
+
+
+ 
 }

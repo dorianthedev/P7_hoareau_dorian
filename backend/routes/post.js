@@ -31,5 +31,8 @@ router.delete('/:id',authentification, postController.deletePost) // supprimer u
 
 router.post('/:id/comments',authentification, multer, commentsController.createComments)
 
+router.delete('/:id/comments',authentification, multer, commentsController.deleteComments)
+
+
 // exportation du module
 module.exports = router;
