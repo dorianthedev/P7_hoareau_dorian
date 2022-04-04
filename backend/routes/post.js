@@ -27,9 +27,9 @@ router.get('/:id', authentification, postController.getOnePost); // afficher un 
 
 router.put('/:id',authentification, multer, postController.updatePost) // modifier une sauce grâce à son id
 
-router.delete('/:id',authentification, postController.deletePost) // supprimer une sauce grâce à son id
+router.delete('/:id',authentification, postController.deletePost) // supprimer un post grâce à son id
 
-router.post('/:id/comments',authentification, commentsController.createComments)
+router.post('/:id/comments',authentification, multer, commentsController.createComments)
 
 // exportation du module
 module.exports = router;

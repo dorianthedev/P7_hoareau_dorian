@@ -11,29 +11,17 @@ const result = dotenv.config();
 
 exports.createComments = (req, res, next) => {
 
-
-    userIdParamsUrl = req.originalUrl.split("=")[1];
-      console.log("----> affichage de l'userId ");
-      console.log(userIdParamsUrl);
-
-      const token = req.headers.authorization.split(' ')[1];
-      console.log("token auth comments");
-      console.log(token);
-
-      const decodedToken = jwt.verify(token, `${process.env.JWT_KEY_TOKEN}`);
-      const userId = decodedToken.userId;
-        console.log("decoded token comments");
-        console.log(decodedToken);
+      console.log("req.body coments");
+      console.log(req.body);
 
         const id = req.params.id;
         console.log("---> id comments");
         console.log(id);
 
+        const userIdLocals = res.locals.userId;
 
-        // if (userId == userIdParamsUrl ) {
+        // if (userIdLocals == id ) {
         //   console.log("reussis");
-
-          
 
         //   mysqlconnection.query(
         //     'INSERT INTO comments SET ?', commentsMess, (error, results, fields) => {
@@ -47,7 +35,6 @@ exports.createComments = (req, res, next) => {
         //         }
         //     }
         // )
-
 
 
         // } else {

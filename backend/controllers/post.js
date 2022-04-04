@@ -57,21 +57,15 @@ exports.createPost = async (req, res, next) => {
     console.log("possstobject");
     console.log(postObject);
     
+    postObject.post_userId = res.locals.userId;
     // les variables dans postObject
-    const {post_userId, post_title, post_message} = postObject;
     
-
     const post = {
         ...postObject,
         post_image: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
         };
 
-        userIdParamsUrl = req.originalUrl.split("=")[1];
-        console.log("----> affichage de l'userId auth");
-        console.log(userIdParamsUrl);
-
     
-    if (userIdParamsUrl == post_userId ) {
         mysqlconnection.query(
             'INSERT INTO post SET ?', post, (error, results, fields) => {
                 if (error) {
@@ -84,10 +78,7 @@ exports.createPost = async (req, res, next) => {
                 }
             }
         )
-        
-    } else {
-        res.status(403).json({message: " vous n'êtes pas autorisé"})
-    }
+    
    
 }
 
@@ -110,17 +101,15 @@ exports.updatePost = async (req, res, next) => {
                 if (error) {
                     res.json({error});
                 } else {
-                    console.log("selection de l'objet que l'on veut modifier");
-                    console.log(results);
-                    userIdParamsUrl = req.originalUrl.split("=")[1];
-                        console.log(userIdParamsUrl);
+                    
+                    const userIdLocals = res.locals.userId;
 
                     // controle autorisation de la modif par userId
                     
                     console.log("--> userIdParamsUrl et post_userId route put");
                     console.log(results[0].post_userId);
 
-                    if (userIdParamsUrl == results[0].post_userId) {
+                    if (userIdLocals == results[0].post_userId) {
                         console.log("authorisation pour modif");
                     
 
@@ -189,7 +178,11 @@ exports.updatePost = async (req, res, next) => {
                             }
                         });
                     } else {
-                        console.log("userId different de l'userId dans db");
+                        fs.unlink(`images/${req.file.filename}`, () => {
+                            if (error) {
+                                throw error;
+                            }
+                        });
                         res.status(403).json({message: " vous n'êtes pas autorisé à modifier les données"})
                         
                     }
@@ -235,17 +228,14 @@ exports.deletePost = async (req, res, next) => {
 
                     // controle autorisation de la modif par userId
 
-                    userIdParamsUrl = req.originalUrl.split("=")[1];
-                    console.log(userIdParamsUrl);
+                    const userIdLocals = res.locals.userId;
 
-
-                    if (userIdParamsUrl == results[0].post_userId) {
+                    if (userIdLocals == results[0].post_userId) {
                         console.log("authorisation pour delete");
 
                         const filename = results[0].post_image.split('/images/')[1];
 
                         // supprime l'image de notre server aussi
-
                         fs.unlink(`images/${filename}`, () => {
                             const querySqlDelete = `
                             DELETE FROM post
@@ -257,19 +247,14 @@ exports.deletePost = async (req, res, next) => {
                                 if (error) {
                                     res.status(500).json({error});
                                 } else {
-                                    res.status(201).json({message : "mise à jour OK dnas la base de données", results});
+                                    res.status(201).json({message : "OK SUPPRIMER dnas la base de données", results});
                                 }
                             });
-
                         });
-
                     } else {
                         console.log("userId different de l'userId dans db");
-                        res.status(403).json({message: " vous n'êtes pas autorisé à modifier les données"})
+                        res.status(403).json({message: " vous n'êtes pas autorisé à UPPRIMER les données"})
                     }
-                    
-
-                        
                 }
             }
         );

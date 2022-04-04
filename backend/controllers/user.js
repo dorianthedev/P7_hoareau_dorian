@@ -27,7 +27,7 @@ const { log } = require('console');
 
 exports.signup = (req, res) => {
 
-        const {firstName, lastName, email, password} = req.body;
+        const {firstName, lastName, email, password, admin} = req.body;
         console.log("ecmascript 2017");
         console.log(email);
         console.log(password);
@@ -53,7 +53,8 @@ exports.signup = (req, res) => {
                 firstName: firstName,
                 lastName: lastName,
                 email: emailCryptoJs,
-                password: hash
+                password: hash,
+                admin: admin
                 };
             console.log("----> contenu user");
             console.log(user);
@@ -210,7 +211,7 @@ exports.deleteUserEtContent = async (req, res, next) => {
                                 if (error) {
                                     res.status(500).json({error});
                                 } else {
-                                    res.status(201).json({message : "mise à jour OK dnas la base de données", results});
+                                    res.status(201).json({message : "OK SUPPRESSION dnas la base de données", results});
                                 }
                             });
 

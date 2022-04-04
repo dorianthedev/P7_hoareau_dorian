@@ -7,33 +7,13 @@ const result = dotenv.config();
 module.exports = (req, res, next) => {
     try {
       const token = req.headers.authorization.split(' ')[1];
-      console.log(req.body);
-      console.log("token auth");
-      console.log(token);
-
       const decodedToken = jwt.verify(token, `${process.env.JWT_KEY_TOKEN}`);
       const userId = decodedToken.userId;
-        console.log("decoded token");
-        console.log(decodedToken);
-
-      userIdParamsUrl = req.originalUrl.split("=")[1];
-      console.log("----> affichage de l'userId auth");
-      console.log(userIdParamsUrl);
         
-
-      if(userIdParamsUrl == userId) {
+      res.locals.userId = userId; // renvoyer au controller suivant
+      
         next();
-      }else {
-        throw 'non autorisé';
-      }
-
-      // if (req.body.userId == userId) {
-      //   next();
-        
-      // } else {
-      //   throw 'Invalid user ID';
-
-      // }
+      
     } catch {
       res.status(401).json({
         message: "Echec d'authentification",
