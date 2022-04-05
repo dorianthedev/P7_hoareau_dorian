@@ -29,6 +29,8 @@ router.put('/:id',authentification, multer, postController.updatePost) // modifi
 
 router.delete('/:id',authentification, postController.deletePost) // supprimer un post grâce à son id
 
+//pour les commentaires
+
 router.post('/:id/comments',authentification, multer, commentsController.createComments)
 
 router.delete('/:id/comments',authentification, multer, commentsController.deleteComments)

@@ -244,6 +244,7 @@ exports.deletePost = async (req, res, next) => {
                             `;
 
                             const valuesDelete = [id];
+                            
                             mysqlconnection.query(querySqlDelete, valuesDelete, (error, results) => {
                                 if (error) {
                                     res.status(500).json({error});
