@@ -1,23 +1,72 @@
 <script>
 export default {
-    name: 'SignUp'
+    name: 'SignUp',
+    data()
+    {
+      return {
+        firstName:'',
+        lastName:'',
+        email:'',
+        password:'',
+        admin:''
+      }
+    },
+    methods: {
+      async signup() {
+        
+        const user = {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.email,
+          password: this.password,
+          admin: this.admin
+        }
+        const radioAdmin = document.querySelector('#admin');
+
+        if (radioAdmin.checked == true) {
+          user.admin = 1;
+        } else {
+          user.admin = 0;
+        }
+
+        console.log(JSON.stringify(user));
+
+        await fetch(`http://localhost:3000/api/auth/signup`, {
+                method: "POST",
+                body: JSON.stringify(user),
+                headers: {
+                    "Content-type" : "application/json"
+                },
+            })
+                   
+        
+      }
+    }
 }
 </script>
 
 <template>
-    <form action="">
+    <form v-on:submit.prevent="onSubmit">
         <div class="container">
             <h1>Créer un compte</h1>
             <hr>
+            <label for="fName"><b>Prénom</b></label>
+            <input type="text" v-model="firstName" placeholder="Votre Prénom" name="fName" id="fName">
+
+            <label for="lName"><b>Nom</b></label>
+            <input type="text" v-model="lastName" placeholder="Votre Nom" name="lName" id="lName">
 
             <label for="email"><b>Email</b></label>
-            <input type="text" placeholder="Votre Email" name="email" id="email" required>
+            <input type="text" v-model="email" placeholder="Votre Email" name="email" id="email">
 
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Votre Mot de passe" name="psw" id="psw" required>
+            <label for="psw"><b>Mot de passe</b></label>
+            <input type="password" v-model="password" placeholder="Votre Mot de passe" name="psw" id="psw">
+
+            <input type="checkbox" v-model="admin" id="admin" name="admin">
+            <label for="admin">Admin ou non ?</label>
             <hr>
 
-            <button type="submit" class="registerbtn">Créer mon compte</button>
+            <button type="submit" v-on:click="signup" class="registerbtn">Créer mon compte</button>
         </div>
 
         <div class="container signin">
