@@ -1,4 +1,5 @@
 <script>
+import axios from 'axios'
 export default {
     name: 'SignUp',
     data()
@@ -29,16 +30,37 @@ export default {
           user.admin = 0;
         }
 
-        console.log(JSON.stringify(user));
+        // let result = await axios.post("http://localhost:3000/api/auth/signup", {
+        //   firstName: this.firstName,
+        //   lastName: this.lastName,
+        //   email: this.email,
+        //   password: this.password,
+        //   admin: this.admin
+        // });
+
+        // console.log(result);
+
 
         await fetch(`http://localhost:3000/api/auth/signup`, {
                 method: "POST",
-                body: JSON.stringify(user),
+                body: JSON.stringify({
+                  firstName: this.firstName,
+                  lastName: this.lastName,
+                  email: this.email,
+                  password: this.password,
+                  admin: this.admin
+                }),
                 headers: {
                     "Content-type" : "application/json"
                 },
             })
-                   
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        }); 
         
       }
     }
