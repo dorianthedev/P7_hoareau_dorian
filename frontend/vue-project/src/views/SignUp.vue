@@ -1,5 +1,4 @@
 <script>
-import axios from 'axios'
 export default {
     name: 'SignUp',
     data()
@@ -29,16 +28,6 @@ export default {
         } else {
           user.admin = 0;
         }
-
-        // let result = await axios.post("http://localhost:3000/api/auth/signup", {
-        //   firstName: this.firstName,
-        //   lastName: this.lastName,
-        //   email: this.email,
-        //   password: this.password,
-        //   admin: this.admin
-        // });
-
-        // console.log(result);
 
 
         await fetch(`http://localhost:3000/api/auth/signup`, {
@@ -97,7 +86,14 @@ export default {
     </form>
 </template>
 
-<style>
+<style scoped>
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  font-weight: normal;
+}
+
 /* Add padding to containers */
 .container {
   padding: 16px;
