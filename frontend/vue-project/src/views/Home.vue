@@ -13,7 +13,7 @@
                             <h3 v-on:click="directionSignUp" class="main-video__button-text">S'inscrire</h3><span><i class="fas fa-angle-double-right"></i></span>
                         </button>
                         <button class="main-video__block-button button2">
-                            <h3 class="main-video__button-text">Connexion</h3><span><i class="fas fa-angle-double-right"></i></span>
+                            <h3 v-on:click="directionLogin" class="main-video__button-text">Connexion</h3><span><i class="fas fa-angle-double-right"></i></span>
                         </button>
                     </div>
                     
@@ -29,12 +29,19 @@ export default {
     methods: {
         directionSignUp(){
             this.$router.push({name:'SignUp'})
+        },
+        directionLogin(){
+            this.$router.push({name:'Login'})
         }
     }
 }
 </script>
 
 <style scoped>
+h1 {
+    font-size: 35px;
+    font-weight: bold;
+}
 button {
     border: 1px solid black;
     padding: 5px;

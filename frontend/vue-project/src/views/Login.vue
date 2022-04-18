@@ -33,7 +33,7 @@
     
 </template>
 
-<style>
+<style scoped>
 
 #app {
     max-width: 1280px;
