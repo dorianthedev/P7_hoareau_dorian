@@ -10,7 +10,7 @@
                     </div>
                     <div class="block-button">
                         <button class="main-video__block-button button1">
-                            <h3 class="main-video__button-text">S'inscrire</h3><span><i class="fas fa-angle-double-right"></i></span>
+                            <h3 v-on:click="directionSignUp" class="main-video__button-text">S'inscrire</h3><span><i class="fas fa-angle-double-right"></i></span>
                         </button>
                         <button class="main-video__block-button button2">
                             <h3 class="main-video__button-text">Connexion</h3><span><i class="fas fa-angle-double-right"></i></span>
@@ -25,7 +25,12 @@
 
 <script>
 export default {
-    name: 'Home'
+    name: 'Home',
+    methods: {
+        directionSignUp(){
+            this.$router.push({name:'SignUp'})
+        }
+    }
 }
 </script>
 
