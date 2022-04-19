@@ -5,9 +5,13 @@ export default {
 </script>
 
 <template>
-    
+    <section>
+        <div>
+            <h1>Bienvenue</h1>
+        </div>
+    </section>
 </template>
 
-<style>
+<style scoped>
 
 </style>

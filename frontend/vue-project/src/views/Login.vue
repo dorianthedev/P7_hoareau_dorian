@@ -23,6 +23,14 @@
                         "Content-type" : "application/json"
                     },
                 })
+                .then(response => response.json())
+                .then(data => {
+                console.log('Success connect:', data);
+                this.$router.push({name:'All'});
+                })
+                .catch((error) => {
+                console.error('Error:', error);
+                }); 
             }
         }
         
