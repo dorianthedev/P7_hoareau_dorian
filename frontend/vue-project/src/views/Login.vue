@@ -1,13 +1,31 @@
 <script>
     export default {
-        name: 'SignUp',
+        name: 'Login',
         data()
         {
             return {
                 email:'',
                 password:'',
             }
+        },
+        methods: {
+            directionSignUp(){
+                this.$router.push({name:'SignUp'})
+            },
+            async login() {
+                await fetch(`http://localhost:3000/api/auth/login`, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        email: this.email,
+                        password: this.password
+                    }),
+                    headers: {
+                        "Content-type" : "application/json"
+                    },
+                })
+            }
         }
+        
     }
 </script>
 
@@ -27,7 +45,7 @@
         </div>
 
         <div class="container signin">
-            <p>Tu n'as pas de compte? <a href="#">S'inscrire</a>.</p>
+            <p>Tu n'as pas de compte? <a href="#" v-on:click="directionSignUp">S'inscrire</a>.</p>
         </div>
     </form>
     

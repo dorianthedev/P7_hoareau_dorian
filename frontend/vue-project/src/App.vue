@@ -2,13 +2,18 @@
 
 export default {
   name: 'App',
+  methods : {
+    directionHome(){
+      this.$router.push({name:'Home'})
+    }
+  }
   
 }
 </script>
 
 <template>
   <div> 
-    <header>
+    <header v-on:click="directionHome">
       <img alt="Vue logo" class="logo" src="./assets/icon-left-font-monochrome-black (1).png"/>
     </header>
 

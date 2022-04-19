@@ -46,10 +46,16 @@ export default {
         .then(response => response.json())
         .then(data => {
           console.log('Success:', data);
+          this.$router.push({name:'Login'})
         })
         .catch((error) => {
           console.error('Error:', error);
         }); 
+        
+      },
+      directionLogin() {
+        
+            this.$router.push({name:'Login'})
         
       }
     }
@@ -81,7 +87,7 @@ export default {
         </div>
 
         <div class="container signin">
-            <p>Tu as déjà un compte? <a href="#">Se connecter</a>.</p>
+            <p>Tu as déjà un compte? <a href="#" v-on:click="directionLogin">Se connecter</a>.</p>
         </div>
     </form>
 </template>
