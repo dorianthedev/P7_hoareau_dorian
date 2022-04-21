@@ -68,7 +68,7 @@ exports.signup = (req, res) => {
                     } else {
                         console.log("----> resultats");
                         console.log(results);
-                        res.json({message : "utlisateur créé"})
+                        res.json({message : "utlisateur créé", user})
                     }
                 }
             )
@@ -137,7 +137,7 @@ exports.login = (req, res, next) => {
                             // 3 arguments
                             {userId: results[0].id},
                             `${process.env.JWT_KEY_TOKEN}`,
-                            {expiresIn: "24h"}
+                            {expiresIn: "1h"}
 
                         )
                         console.log("token");
@@ -146,7 +146,7 @@ exports.login = (req, res, next) => {
                         // reponse du server avec le userId et le token
                         res.status(201).json({
                             userId: results[0].id,
-                            token,
+                            token
                         })
 
                     })
