@@ -1,6 +1,15 @@
 <script>
 export default {
-    name:'All'
+    name:'All',
+    methods: {
+
+    },
+    mounted() {
+            const userLocalStorage = localStorage.getItem("login-user");
+            if (!userLocalStorage) {
+                this.$router.push({name:'Login'});
+            }
+        }
 }
 </script>
 

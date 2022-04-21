@@ -26,6 +26,10 @@
                 .then(response => response.json())
                 .then(data => {
                 console.log('Success connect:', data);
+                localStorage.setItem("login-user",JSON.stringify(data));
+
+                // const userLocalStorage = JSON.parse(localStorage.getItem("login-user"));
+                // console.log(userLocalStorage.token);
                 this.$router.push({name:'All'});
                 })
                 .catch((error) => {
