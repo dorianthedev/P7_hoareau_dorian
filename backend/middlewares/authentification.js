@@ -7,12 +7,14 @@ const result = dotenv.config();
 module.exports = (req, res, next) => {
     try {
       const token = req.headers.authorization.split(' ')[1];
-      const decodedToken = jwt.verify(token, `${process.env.JWT_KEY_TOKEN}`);
-      console.log("--------------decoded-------");
-      console.log(decodedToken);
+      const decodedToken = jwt.verify(token, `${process.env.JWT_KEY_TOKEN}`);      
       const userId = decodedToken.userId;
+      
+      console.log(decodedToken);
         
       res.locals.userId = userId; // renvoyer au controller suivant
+      res.locals.token = token;
+
       
         next();
       

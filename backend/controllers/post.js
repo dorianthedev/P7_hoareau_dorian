@@ -8,6 +8,9 @@ const { log } = require('console');
 
 
 exports.getAllPost =async (req, res) => {
+    const userIdLocals = res.locals.userId;
+    const token = res.locals.token;
+
     try {
         const post = await mysqlconnection.query(
             "SELECT * FROM `post` WHERE ?", ["1"],
@@ -15,7 +18,7 @@ exports.getAllPost =async (req, res) => {
                 if (error) {
                     res.json({error});
                 } else {
-                    res.status(200).json({results})
+                    res.status(200).json({results, userIdLocals, token})
                 }
             }
         );

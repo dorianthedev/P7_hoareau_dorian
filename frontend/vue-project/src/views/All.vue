@@ -4,12 +4,34 @@ export default {
     methods: {
 
     },
-    mounted() {
-            const userLocalStorage = localStorage.getItem("login-user");
-            if (!userLocalStorage) {
+    async mounted() {
+            const userLocalStorageToken = JSON.parse(localStorage.getItem("login-user"));
+            // const userLocalStorage = localStorage.getItem("login-user");
+            // if (!userLocalStorage) {
+            //     this.$router.push({name:'Login'});
+            // }
+
+            await fetch(`http://localhost:3000/api/post`, {
+                  
+                  headers: {
+                      "Content-type" : "application/json",
+                      'Authorization': `Bearer ${userLocalStorageToken.token}`
+                  },
+              })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Success:', data);
+            if (userLocalStorageToken.token !== data.token) {
                 this.$router.push({name:'Login'});
+
             }
-        }
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          }); 
+        
+
+    }
 }
 </script>
 
