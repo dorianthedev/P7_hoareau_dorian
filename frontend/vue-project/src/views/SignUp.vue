@@ -29,28 +29,51 @@ export default {
           user.admin = 0;
         }
 
+        let emailRegex = new RegExp('^[a-zA-Z0-9-_]+[a-zA-Z0-9.-_]*@[a-zA-Z0-9-_]{2,100}.[a-zA-Z.-_]+[a-z-_]+$', 'g');
+        let mdpRegex = new RegExp ('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,100}$', 'g');
+        let prenomNomRegex = new RegExp('^([A-Za-z]{3,20})?([-]{0,1})?([A-Za-z]{3,20})$');
 
-        await fetch(`http://localhost:3000/api/auth/signup`, {
-                method: "POST",
-                body: JSON.stringify({
-                  firstName: this.firstName,
-                  lastName: this.lastName,
-                  email: this.email,
-                  password: this.password,
-                  admin: this.admin
-                }),
-                headers: {
-                    "Content-type" : "application/json"
-                },
-            })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Success:', data);
-          this.$router.push({name:'Login'})
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        }); 
+        let emailTest = emailRegex.test(this.email);
+
+        function emailTestf() {
+          if(!emailTest) {
+                let msg = document.querySelector('.emailmsg');
+                msg.classList.remove('cache');
+            } else {
+                let msg = document.querySelector('.emailmsg');
+                msg.classList.add('cache');
+                return true;
+
+            }
+        }
+        emailTestf()
+
+        
+
+        if ( emailTestf()) {
+          
+          await fetch(`http://localhost:3000/api/auth/signup`, {
+                  method: "POST",
+                  body: JSON.stringify({
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    email: this.email,
+                    password: this.password,
+                    admin: this.admin
+                  }),
+                  headers: {
+                      "Content-type" : "application/json"
+                  },
+              })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Success:', data);
+            this.$router.push({name:'Login'})
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          }); 
+        }
         
       },
       directionLogin() {
@@ -68,16 +91,17 @@ export default {
             <h1>Créer un compte</h1>
             <hr>
             <label for="fName"><b>Prénom</b></label>
-            <input type="text" v-model="firstName" placeholder="Votre Prénom" name="fName" id="fName">
+            <input type="text" v-model="firstName" placeholder="Votre Prénom" name="fName" id="fName" required>
 
             <label for="lName"><b>Nom</b></label>
-            <input type="text" v-model="lastName" placeholder="Votre Nom" name="lName" id="lName">
+            <input type="text" v-model="lastName" placeholder="Votre Nom" name="lName" id="lName" required>
 
             <label for="email"><b>Email</b></label>
-            <input type="text" v-model="email" placeholder="Votre Email" name="email" id="email">
+            <p class="emailmsg cache">*email non valide</p>
+            <input type="text" v-model="email" placeholder="Votre Email" name="email" id="email" required>
 
             <label for="psw"><b>Mot de passe</b></label>
-            <input type="password" v-model="password" placeholder="Votre Mot de passe" name="psw" id="psw">
+            <input type="password" v-model="password" placeholder="Votre Mot de passe" name="psw" id="psw" required>
 
             <input type="checkbox" v-model="admin" id="admin" name="admin">
             <label for="admin">Admin ou non ?</label>
@@ -159,4 +183,15 @@ a {
   background-color: #f1f1f1;
   text-align: center;
 }
+
+.cache { 
+  display: none;
+}
+
+.emailmsg {
+  font-size: 7px;
+  font-style: italic;
+}
+
+
 </style>
