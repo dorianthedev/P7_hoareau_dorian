@@ -68,7 +68,20 @@ export default {
           .then(response => response.json())
           .then(data => {
             console.log('Success:', data);
-            this.$router.push({name:'Login'})
+
+            if (data.error) {
+              const errorEmail = data.error.code
+              //verif si email déjà dans db
+              if (errorEmail == 'ER_DUP_ENTRY') {
+                alert("Adresse email déjà utilisé");
+              }
+              
+            } else {
+                this.$router.push({name:'Login'})
+              }
+            
+
+            
           })
           .catch((error) => {
             console.error('Error:', error);
