@@ -29,12 +29,32 @@ export default {
           user.admin = 0;
         }
 
-        let emailRegex = new RegExp('^[a-zA-Z0-9-_]+[a-zA-Z0-9.-_]*@[a-zA-Z0-9-_]{2,100}.[a-zA-Z.-_]+[a-z-_]+$', 'g');
-        let mdpRegex = new RegExp ('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,100}$', 'g');
-        let prenomNomRegex = new RegExp('^([A-Za-z]{3,20})?([-]{0,1})?([A-Za-z]{3,20})$');
-
+        let emailRegex = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'g');
         let emailTest = emailRegex.test(this.email);
 
+        let mdpRegex = new RegExp ('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,100}$', 'g');
+
+        let prenomNomRegex = new RegExp(/^([A-Za-z]{3,20})?([-]{0,1})?([A-Za-z]{3,20})$/, 'g');
+        let prenomTest = prenomNomRegex.test(this.firstName);
+        let nomTest = prenomNomRegex.test(this.lastName);
+
+
+        function prenomTestf() {
+          if(!prenomTest) {
+                console.log("popopopo");
+                let msgP = document.querySelector('.prenommsg');
+                msgP.classList.remove('cache');
+            } else {
+              console.log("ssssssssssssssssssssssssssssssss");
+                let msgP = document.querySelector('.prenommsg');
+                msgP.classList.add('cache');
+                return true;
+
+            }
+        }
+        prenomTestf()
+
+        
         function emailTestf() {
           if(!emailTest) {
                 let msg = document.querySelector('.emailmsg');
@@ -50,7 +70,7 @@ export default {
 
         
 
-        if ( emailTestf()) {
+        if ( prenomTestf() && emailTestf()) {
           
           await fetch(`http://localhost:3000/api/auth/signup`, {
                   method: "POST",
@@ -104,9 +124,11 @@ export default {
             <h1>Créer un compte</h1>
             <hr>
             <label for="fName"><b>Prénom</b></label>
+            <p class="prenommsg cache">*prénom non valide</p>
             <input type="text" v-model="firstName" placeholder="Votre Prénom" name="fName" id="fName" required>
 
             <label for="lName"><b>Nom</b></label>
+            <p class="nommsg cache">*prénom non valide</p>
             <input type="text" v-model="lastName" placeholder="Votre Nom" name="lName" id="lName" required>
 
             <label for="email"><b>Email</b></label>
@@ -201,9 +223,10 @@ a {
   display: none;
 }
 
-.emailmsg {
-  font-size: 7px;
+.emailmsg, .prenommsg {
+  font-size: 10px;
   font-style: italic;
+  color: red;
 }
 
 
