@@ -1,15 +1,21 @@
 <script>
 export default {
     name:'All',
+    data()
+    {
+        return {
+            userId:'',
+            admin:'',
+            token:'',
+            allposts:[],
+            allusers:[]
+        }
+    },
     methods: {
 
     },
     async mounted() {
             const userLocalStorageToken = JSON.parse(localStorage.getItem("login-user"));
-            // const userLocalStorage = localStorage.getItem("login-user");
-            // if (!userLocalStorage) {
-            //     this.$router.push({name:'Login'});
-            // }
             
             if (userLocalStorageToken) {
                 await fetch(`http://localhost:3000/api/post`, {
@@ -24,7 +30,6 @@ export default {
                     console.log('Success:', data);
                     if (userLocalStorageToken.token !== data.token) {
                         this.$router.push({name:'Login'});
-        
                     }
                 })
                 .catch((error) => {

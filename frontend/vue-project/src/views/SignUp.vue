@@ -14,20 +14,20 @@ export default {
     methods: {
       async signup() {
         
-        const user = {
-          firstName: this.firstName,
-          lastName: this.lastName,
-          email: this.email,
-          password: this.password,
-          admin: this.admin
-        }
-        const radioAdmin = document.querySelector('#admin');
+        // const user = {
+        //   firstName: this.firstName,
+        //   lastName: this.lastName,
+        //   email: this.email,
+        //   password: this.password,
+        //   admin: this.admin
+        // }
+        // const radioAdmin = document.querySelector('#admin');
 
-        if (radioAdmin.checked == true) {
-          user.admin = 1;
-        } else {
-          user.admin = 0;
-        }
+        // if (radioAdmin.checked == true) {
+        //   user.admin = 1;
+        // } else {
+        //   user.admin = 0;
+        // }
 
         //-----------RegEx------------//
 
@@ -41,17 +41,16 @@ export default {
         let nomTest = nomRegex.test(this.lastName);
         
         let mdpRegex = new RegExp ('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,100}$', 'g');
+        let mdpTest = mdpRegex.test(this.password);
 
         //----------- FUNCTION RegEx------------//
 
 
         function prenomTestf() {
           if(!prenomTest) {
-                console.log("popopopo");
                 let msgP = document.querySelector('.prenommsg');
                 msgP.classList.remove('cache');
             } else {
-              console.log("ssssssssssssssssssssssssssssssss");
                 let msgP = document.querySelector('.prenommsg');
                 msgP.classList.add('cache');
                 return true;
@@ -62,11 +61,9 @@ export default {
 
         function nomTestf() {
           if(!nomTest) {
-                console.log("popopopo");
                 let msgN = document.querySelector('.nommsg');
                 msgN.classList.remove('cache');
             } else {
-              console.log("ssssssssssssssssssssssssssssssss");
                 let msgN = document.querySelector('.nommsg');
                 msgN.classList.add('cache');
                 return true;
@@ -89,9 +86,20 @@ export default {
         }
         emailTestf()
 
-        
+        function mdpTestf() {
+          if(!mdpTest) {
+                let msgPs = document.querySelector('.mdpmsg');
+                msgPs.classList.remove('cache');
+            } else {
+                let msgPs = document.querySelector('.mdpmsg');
+                msgPs.classList.add('cache');
+                return true;
 
-        if ( prenomTestf() && nomTestf() && emailTestf()) {
+            }
+        }
+        mdpTestf()
+
+        if (prenomTestf() && nomTestf() && emailTestf() && mdpTestf()) {
           
           await fetch(`http://localhost:3000/api/auth/signup`, {
                   method: "POST",
@@ -157,6 +165,7 @@ export default {
             <input type="text" v-model="email" placeholder="Votre Email" name="email" id="email" required>
 
             <label for="psw"><b>Mot de passe</b></label>
+            <p class="mdpmsg cache">*nom non valide</p>
             <input type="password" v-model="password" placeholder="Votre Mot de passe" name="psw" id="psw" required>
 
             <input type="checkbox" v-model="admin" id="admin" name="admin">
@@ -244,7 +253,7 @@ a {
   display: none;
 }
 
-.emailmsg, .prenommsg, .nommsg {
+.emailmsg, .prenommsg, .nommsg, .mdpmsg {
   font-size: 10px;
   font-style: italic;
   color: red;
