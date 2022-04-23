@@ -12,7 +12,7 @@ export default {
         }
     },
     methods: {
-
+        
     },
     async mounted() {
             const userLocalStorageToken = JSON.parse(localStorage.getItem("login-user"));

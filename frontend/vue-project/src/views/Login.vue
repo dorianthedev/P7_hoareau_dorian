@@ -13,6 +13,15 @@
                 this.$router.push({name:'SignUp'})
             },
             async login() {
+                //-----------RegEx------------//
+
+            let emailRegex = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'g');
+            let emailTest = emailRegex.test(this.email);
+
+            let mdpRegex = new RegExp ('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,100}$', 'g');
+            let mdpTest = mdpRegex.test(this.password);
+
+
                 await fetch(`http://localhost:3000/api/auth/login`, {
                     method: "POST",
                     body: JSON.stringify({
