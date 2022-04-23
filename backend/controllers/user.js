@@ -112,7 +112,7 @@ exports.login = (req, res, next) => {
 
                 // si l'email n'est pas dans la base de donnée
                 if (results == 0) {
-                    return res.status(404).json({error : " utilisateur inexistant dans la base de donnée"})
+                    return res.status(404).json({error : "utilisateur inexistant dans la base de donnée"})
                 }
                 
                 

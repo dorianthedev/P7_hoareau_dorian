@@ -29,11 +29,15 @@
                 localStorage.setItem("login-user",JSON.stringify(data));
                 
                     if (data.error) {
-                        const errorMdp = data.error;
+                        const errorMdpEtEmail = data.error;
                         //verif si email déjà dans db
-                        if (errorMdp == 'Le mot de passe est incorrect') {
+                        if (errorMdpEtEmail == 'Le mot de passe est incorrect') {
                             alert("Mot de passe est incorrect");
                         }
+                        if (errorMdpEtEmail == 'utilisateur inexistant dans la base de donnée') {
+                            alert("Email introuvable");
+                        }
+                        
                     
                     } else {
                         this.$router.push({name:'All'})
