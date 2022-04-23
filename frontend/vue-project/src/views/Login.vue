@@ -27,10 +27,18 @@
                 .then(data => {
                 console.log('Success connect:', data);
                 localStorage.setItem("login-user",JSON.stringify(data));
+                
+                    if (data.error) {
+                        const errorMdp = data.error;
+                        //verif si email déjà dans db
+                        if (errorMdp == 'Le mot de passe est incorrect') {
+                            alert("Mot de passe est incorrect");
+                        }
+                    
+                    } else {
+                        this.$router.push({name:'All'})
+                    }
 
-                // const userLocalStorage = JSON.parse(localStorage.getItem("login-user"));
-                // console.log(userLocalStorage.token);
-                this.$router.push({name:'All'});
                 })
                 .catch((error) => {
                 console.error('Error:', error);
