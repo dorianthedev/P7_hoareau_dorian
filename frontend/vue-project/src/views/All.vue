@@ -28,7 +28,7 @@ export default {
                 .then(response => response.json())
                 .then(data => {
                     console.log('Success:', data);
-                    if (userLocalStorageToken.token !== data.token) {
+                    if (userLocalStorageToken.token !== data.token || data.message == "Echec d'authentification") {
                         this.$router.push({name:'Login'});
                     }
                 })
