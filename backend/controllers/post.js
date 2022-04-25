@@ -13,7 +13,7 @@ exports.getAllPost =async (req, res) => {
 
     try {
         const post = await mysqlconnection.query(
-            "SELECT * FROM `post` WHERE ?", ["1"],
+            "SELECT * FROM `post` INNER JOIN `user` ON post_userId = user.id  WHERE ?", ["1"],
             (error, results) => {
                 if (error) {
                     res.json({error});
