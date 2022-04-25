@@ -1,9 +1,13 @@
 <script>
+import Nav from "../components/Nav.vue";
 export default {
   name: "All",
+  components: {
+    Nav,
+  },
   data() {
     return {
-      posts: []
+      posts: [],
     };
   },
   methods: {},
@@ -24,9 +28,9 @@ export default {
       .then((data) => {
         console.log("Success:", data);
         if (data.message == "Echec d'authentification") {
-            this.$router.push({name:'Login'});
+          this.$router.push({ name: "Login" });
         }
-        this.posts = data.results
+        this.posts = data.results;
         console.log(this.posts);
       })
       .catch((error) => {
@@ -39,9 +43,19 @@ export default {
 <template>
   <section>
     <div>
-      <h1>Bienvenue</h1>
+      <Nav />
+      <div v-for="post in posts" :key="post.id_post" >
+        <p>{{post.post_message}}</p>
+
+      </div>
     </div>
   </section>
 </template>
 
-<style scoped></style>
+<style scoped>
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  font-weight: normal;
+}
+</style>
