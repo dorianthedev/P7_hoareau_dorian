@@ -26,6 +26,8 @@ export default {
         if (data.message == "Echec d'authentification") {
             this.$router.push({name:'Login'});
         }
+        this.posts = data.results
+        console.log(this.posts);
       })
       .catch((error) => {
         console.error("Error:", error);
