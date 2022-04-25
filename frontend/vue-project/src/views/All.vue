@@ -23,6 +23,9 @@ export default {
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
+        if (data.message == "Echec d'authentification") {
+            this.$router.push({name:'Login'});
+        }
       })
       .catch((error) => {
         console.error("Error:", error);
