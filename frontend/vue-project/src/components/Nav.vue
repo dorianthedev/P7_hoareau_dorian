@@ -13,8 +13,8 @@ export default {
 <template>
   <section class="block-nav">
     <nav>
-      <a href="">Post</a>
-      <a href="">Profile</a>
+      <router-link to="/all">Post |</router-link>
+      <a href="">Profil |</a>
       <a v-on:click="logout" href="">Déconnexion</a>
     </nav>
   </section>
@@ -27,8 +27,10 @@ export default {
   font-weight: normal;
 }
 
-a {
+a, router-link {
   color: black;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 a:hover {
@@ -38,11 +40,15 @@ a:hover {
 .block-nav {
   display: flex;
   justify-content: center;
-  padding-top: 10px;
+  padding: 10px 0;
+  
+    background-color: #F0F6F6;
+
 }
 
 nav {
   display: flex;
   column-gap: 10px;
+  
 }
 </style>

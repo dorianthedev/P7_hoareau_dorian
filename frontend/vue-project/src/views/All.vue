@@ -1,9 +1,11 @@
 <script>
 import Nav from "../components/Nav.vue";
+import AddPost from "../components/AddPost.vue";
 export default {
   name: "All",
   components: {
     Nav,
+    AddPost,
   },
   data() {
     return {
@@ -44,9 +46,23 @@ export default {
   <section>
     <div>
       <Nav />
-      <div v-for="post in posts" :key="post.id_post" >
-        <p>{{post.post_message}}</p>
-
+      <AddPost />
+      <h3>Les posts des collègues</h3>
+      <div class="main-block" v-for="post in posts" :key="post.id_post">
+        <div class="block-post">
+          <div class="block-post__user">
+            <p>{{ post.firstName }} {{ post.lastName }}</p>
+          </div>
+          <div class="block-post__title">
+            <p>{{ post.post_title }}</p>
+          </div>
+          <div class="block-post__message">
+            <p>{{ post.post_message }}</p>
+          </div>
+          <div class="block-post__image">
+            <img class="image" v-if=" post.post_image" :src=" post.post_image" alt="photo du profil de l'utilisatuer qui a écris la publication">
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -57,5 +73,25 @@ export default {
   max-width: 1280px;
   margin: 0 auto;
   font-weight: normal;
+}
+
+.main-block {
+  display: flex;
+  justify-content: center;
+}
+
+.block-post {
+  margin-bottom: 20px;
+}
+
+h3 {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.image {
+  width: 300px;
+  height: 300px;
 }
 </style>
