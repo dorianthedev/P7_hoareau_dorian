@@ -146,7 +146,8 @@ exports.login = (req, res, next) => {
                         // reponse du server avec le userId et le token
                         res.status(201).json({
                             userId: results[0].id,
-                            token
+                            token,
+                            admin: results[0].admin
                         })
 
                     })

@@ -10,6 +10,7 @@ export default {
   data() {
     return {
       userId:'',
+      admin:'',
       posts: [],
     };
   },
@@ -22,6 +23,7 @@ export default {
     );
     
     this.userId = userLocalStorageToken.id
+    this.admin = userLocalStorageToken.admin
     
     
 
@@ -75,7 +77,7 @@ export default {
               alt="photo du profil de l'utilisatuer qui a écris la publication"
             />
           </div>
-          <div class="bandeaubtn" v-if="post.post_userId == userId || post.admin == 1">
+          <div class="bandeaubtn" v-if="post.post_userId == userId || this.admin == 1 || this.admin == true">
             <button v-if="post.userId == userId" class="modify">
               <p>Modifier</p>
             </button>
