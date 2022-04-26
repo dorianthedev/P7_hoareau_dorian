@@ -9,14 +9,21 @@ export default {
   },
   data() {
     return {
+      userId:'',
       posts: [],
     };
   },
-  methods: {},
+  methods: {
+    
+  },
   async mounted() {
     const userLocalStorageToken = JSON.parse(
       localStorage.getItem("login-user")
     );
+    
+    this.userId = userLocalStorageToken.id
+    
+    
 
     if (!userLocalStorageToken) return this.$router.push({ name: "Login" });
 
@@ -34,6 +41,7 @@ export default {
         }
         this.posts = data.results;
         console.log(this.posts);
+        
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -60,7 +68,20 @@ export default {
             <p>{{ post.post_message }}</p>
           </div>
           <div class="block-post__image">
-            <img class="image" v-if=" post.post_image" :src=" post.post_image" alt="photo du profil de l'utilisatuer qui a écris la publication">
+            <img
+              class="image"
+              v-if="post.post_image"
+              :src="post.post_image"
+              alt="photo du profil de l'utilisatuer qui a écris la publication"
+            />
+          </div>
+          <div class="bandeaubtn" v-if="post.post_userId == userId || post.admin == 1">
+            <button v-if="post.userId == userId" class="modify">
+              <p>Modifier</p>
+            </button>
+            <button class="delete" @click="deleteAPost(post.id)">
+              <p>Supprimer</p>
+            </button>
           </div>
         </div>
       </div>
@@ -94,4 +115,5 @@ h3 {
   width: 300px;
   height: 300px;
 }
+
 </style>
