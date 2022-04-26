@@ -94,6 +94,7 @@ h3 {
   max-width: 600px;
   margin: 0 auto;
   text-align: center;
+  border: 3px solid black;
 }
 
 .container ::placeholder {
