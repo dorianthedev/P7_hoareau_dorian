@@ -247,7 +247,7 @@ exports.getAllUser = async (req, res) => {
         console.log(id);
 
         const post = await mysqlconnection.query(
-            "SELECT * FROM `post` WHERE ?", ["1"],
+            "SELECT * FROM `user` WHERE ?", ["1"],
             (error, results) => {
                 if (userIdLocals == id) {
                         
