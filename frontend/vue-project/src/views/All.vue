@@ -46,6 +46,7 @@ export default {
 
     if (!userLocalStorageToken) return this.$router.push({ name: "Login" });
 
+    // afficher les posts sans les commentaires
     await fetch(`http://localhost:3000/api/post`, {
       headers: {
         "Content-type": "application/json",
