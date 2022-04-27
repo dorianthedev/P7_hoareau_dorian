@@ -260,6 +260,7 @@ exports.getAllUser = async (req, res) => {
 //recup my user
 
 exports.getOneUser = async (req, res, next) => {
+    const userIdLocals = res.locals.userId;
 
     try {
         const id = req.params.id;
@@ -272,7 +273,13 @@ exports.getOneUser = async (req, res, next) => {
                 if (error) {
                     res.json({error});
                 } else {
-                    res.status(200).json({results})
+                    if (userIdLocals == id) {
+                        
+                        res.status(200).json({results})
+                    } else {
+                        res.status(403).json({message: " vous n'êtes pas autorisé "})
+
+                    }
                 }
             }
         );
