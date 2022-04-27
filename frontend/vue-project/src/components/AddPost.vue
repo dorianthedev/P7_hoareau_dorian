@@ -3,26 +3,29 @@ export default {
   name: "AddPost",
   data() {
     return {
-      title: "",
-      message: "",
-      image: "",
+      post: {
+        title: "",
+        message: "",
+        image: "",
+      },
     };
   },
   methods: {
     recupImage(e) {
-      this.image = e.target.files[0].name;
+      console.log(e);
+      this.post.image = e.target.files[0].name;
     },
     async addPost() {
       const userLocalStorageToken = JSON.parse(
         localStorage.getItem("login-user")
       );
       const post = {
-        post_title: this.title,
-        post_message: this.message,
-        post_image: this.image,
+        post_title: this.post.title,
+        post_message: this.post.message,
+        post_image: this.post.image,
       };
       const postString = JSON.stringify(post);
-      
+
       console.log(postString);
       await fetch(`http://localhost:3000/api/post/`, {
         method: "POST",
@@ -40,7 +43,6 @@ export default {
           console.error("Error:", error);
         });
     },
-    
   },
 };
 </script>
@@ -52,7 +54,7 @@ export default {
         <label for="message"><h3>Ecrire un post</h3></label>
         <input
           type="text"
-          v-model="title"
+          v-model="post.title"
           placeholder="Titre important"
           name="title"
           id="title"
@@ -60,7 +62,7 @@ export default {
         />
         <input
           type="text"
-          v-model="message"
+          v-model="post.message"
           placeholder="Votre message"
           name="message"
           id="message"
