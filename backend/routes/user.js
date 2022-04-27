@@ -18,7 +18,7 @@ router.post("/login", userController.login);
 router.delete("/:id", userController.deleteUserEtContent);
 
 // la route recup all user
-router.get("/allusers", authentification, userController.getAllUser);
+router.get("/:id/allusers", authentification, userController.getAllUser);
 
 // la route recup my profile
 router.get("/:id/profil", authentification, userController.getOneUser);

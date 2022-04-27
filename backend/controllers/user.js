@@ -242,13 +242,19 @@ exports.getAllUser = async (req, res) => {
     const userIdLocals = res.locals.userId;
 
     try {
+        const id = req.params.id;
+        console.log("---> id");
+        console.log(id);
+
         const post = await mysqlconnection.query(
             "SELECT * FROM `post` WHERE ?", ["1"],
             (error, results) => {
-                if (error) {
-                    res.json({error});
-                } else {
+                if (userIdLocals == id) {
+                        
                     res.status(200).json({results})
+                } else {
+                    res.status(403).json({message: " vous n'êtes pas autorisé "})
+
                 }
             }
         );
