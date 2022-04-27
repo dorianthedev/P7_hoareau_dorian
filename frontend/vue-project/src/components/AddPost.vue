@@ -97,6 +97,7 @@ h3 {
   margin: 0 auto;
   text-align: center;
   border: 3px solid black;
+  border-radius: 30px;
 }
 
 .container ::placeholder {
