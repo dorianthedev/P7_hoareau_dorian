@@ -257,7 +257,31 @@ exports.getAllUser = async (req, res) => {
     }
 }
 
+//recup my user
 
+exports.getOneUser = async (req, res, next) => {
+
+    try {
+        const id = req.params.id;
+        console.log("---> id");
+        console.log(id);
+
+        const post = await mysqlconnection.query(
+            "SELECT * FROM `user` WHERE `id` = ?", [id],
+            (error, results) => {
+                if (error) {
+                    res.json({error});
+                } else {
+                    res.status(200).json({results})
+                }
+            }
+        );
+
+
+    } catch (err) {
+        res.status(500).json({ error: err});
+    }
+}
 
 
 
