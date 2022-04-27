@@ -62,15 +62,31 @@ exports.createPost = async (req, res, next) => {
     
     postObject.post_userId = res.locals.userId;
     // les variables dans postObject
+    // const post = {
+    //     ...postObject,
+    //     post_image: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+    //     };
     
-    const post = {
-        ...postObject,
-        post_image: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
-        };
+    function test0() {
+        if (req.file) {
+            const post = {
+                ...postObject,
+                post_image: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+                };
+                return post
+            
+        } else {
+            const post2 = {
+                ...postObject
+                };
+            return post2
+        }
+        
+    }
 
     
         mysqlconnection.query(
-            'INSERT INTO post SET ?', post, (error, results, fields) => {
+            'INSERT INTO post SET ?', test0(), (error, results, fields) => {
                 if (error) {
                     console.log(error);
                     res.json({error});
