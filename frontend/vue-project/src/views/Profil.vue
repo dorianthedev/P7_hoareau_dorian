@@ -15,7 +15,7 @@ export default {
       const userLocalStorageToken = JSON.parse(
         localStorage.getItem("login-user")
       );
-          const postId = userLocalStorageToken.userId;
+      const postId = userLocalStorageToken.userId;
 
       fetch(`http://localhost:3000/api/auth/${postId}`, {
         headers: {
@@ -23,12 +23,17 @@ export default {
           Authorization: `Bearer ${userLocalStorageToken.token}`,
         },
         method: "DELETE",
-      }).then(() => {
-        alert("La profil a bien été supprimée.");
-        localStorage.clear();
-        this.$router.push({name:'SignUp'})
-
-      });
+      })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("delete", data);
+          alert("La profil a bien été supprimée.");
+          localStorage.clear();
+          this.$router.push({ name: "SignUp" });
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     },
   },
   async mounted() {
