@@ -2,6 +2,7 @@
 const express = require('express')
 //importation du controllers/user.js
 const userController = require('../controllers/user');
+const authentification = require('../middlewares/authentification');
 //importation du middleware/password
 const password = require('../middlewares/password')
 //la fonction router
@@ -15,6 +16,10 @@ router.post("/login", userController.login);
 
 //la route delete user et ses post
 router.delete("/:id", userController.deleteUserEtContent);
+
+// la route recup all user
+router.get("/allusers", authentification, userController.getAllUser);
+
 
 
 
