@@ -80,6 +80,9 @@ export default {
           <div class="block-post__user">
             <p>{{ post.firstName }} {{ post.lastName }}</p>
           </div>
+          <div class="block-post__create">
+            <p>{{ post.post_date }}</p>
+          </div>
           <div class="block-post__title">
             <p>{{ post.post_title }}</p>
           </div>
