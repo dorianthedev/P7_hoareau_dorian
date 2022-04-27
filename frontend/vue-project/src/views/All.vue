@@ -15,6 +15,23 @@ export default {
     };
   },
   methods: {
+    deleteAPost(postId) {
+      const userLocalStorageToken = JSON.parse(
+      localStorage.getItem("login-user")
+    );
+      fetch(`http://localhost:3000/api/post/${postId}`, 
+            {
+                headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${userLocalStorageToken.token}`,
+                },
+                method: "DELETE",
+            })
+            .then(() => {
+                alert("La publication a bien été supprimée.");
+                window.location = "/all";
+            })
+    }
     
   },
   async mounted() {
@@ -22,7 +39,7 @@ export default {
       localStorage.getItem("login-user")
     );
     
-    this.userId = userLocalStorageToken.id
+    this.userId = userLocalStorageToken.userId
     this.admin = userLocalStorageToken.admin
     
     
@@ -77,11 +94,11 @@ export default {
               alt="photo du profil de l'utilisatuer qui a écris la publication"
             />
           </div>
-          <div class="bandeaubtn" v-if="post.post_userId == userId || this.admin == 1 || this.admin == true">
-            <button v-if="post.userId == userId" class="modify">
+          <div class="bandeaubtn" v-if="post.id == userId || this.admin == 1 || this.admin == true">
+            <button class="modify">
               <p>Modifier</p>
             </button>
-            <button class="delete" @click="deleteAPost(post.id)">
+            <button class="delete" @click="deleteAPost(post.id_post)">
               <p>Supprimer</p>
             </button>
           </div>
