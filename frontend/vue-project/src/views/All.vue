@@ -39,13 +39,13 @@ export default {
     const userLocalStorageToken = JSON.parse(
       localStorage.getItem("login-user")
     );
-    
-    this.userId = userLocalStorageToken.userId
-    this.admin = userLocalStorageToken.admin
-    
+  
     
 
     if (!userLocalStorageToken) return this.$router.push({ name: "Login" });
+
+    this.userId = userLocalStorageToken.userId
+    this.admin = userLocalStorageToken.admin
 
     // afficher les posts sans les commentaires
     await fetch(`http://localhost:3000/api/post`, {
