@@ -14,7 +14,7 @@ export default {
   <section class="block-nav">
     <nav>
       <router-link to="/all">Post |</router-link>
-      <a href="">Profil |</a>
+      <router-link to="/profil">Profil |</router-link>
       <a v-on:click="logout" href="">Déconnexion</a>
     </nav>
   </section>
