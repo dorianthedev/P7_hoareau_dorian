@@ -29,8 +29,7 @@ export default {
             })
             .then(() => {
                 alert("La publication a bien été supprimée.");
-                localStorage.clear();
-                this.$router.push({ name: "Login" });
+                window.location = "/all";
             })
     }
     
