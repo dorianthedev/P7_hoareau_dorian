@@ -41,16 +41,25 @@ export default {
 <template>
   <div class="main-content">
     <div v-for="user in users" :key="user.id">
-      <div class="block-profile-users">
-        <div class="block-profile-img">
-          <img
-            class="profile-img"
-            src="../assets/User_icon_BLACK-01.png"
-            alt=""
-          />
+      <div class="block-profil">
+        <div class="block-profil-data">
+          <div class="block-profil-img">
+            <img
+              class="img-user"
+              src="../assets/User_icon_BLACK-01.png"
+              alt=""
+            />
+          </div>
+          <div class="block-profil-name">
+            <p class="block-profil-f-l">
+              {{ user.firstName }} {{ user.lastName }}
+            </p>
+          </div>
         </div>
-        <div class="block-profile-name">
-          <p>{{ user.firstName }} {{ user.lastName }}</p>
+        <div class="block-button">
+          <button class="button-messages">
+            <p>Envoyer un message</p>
+          </button>
         </div>
       </div>
     </div>
@@ -64,21 +73,51 @@ export default {
   font-weight: normal;
 }
 
-.block-profile-users {
+.block-profil {
   border: 1px solid black;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 180px;
-  height: 180px;
-  margin: 0 auto 15px;
+  max-width: 300px;
+  margin: 0 auto;
   border: 2px solid black;
   align-items: center;
-  border-radius: 50%;
+  border-radius: 20px;
+  margin-bottom: 10px;
   
 }
 
-.profile-img {
-  width: 100px;
+.block-profil-data {
+  display: flex;
+  align-items: center;
+}
+
+.img-user {
+  width: 30px;
+}
+
+.block-button {
+  margin-left: auto;
+  padding-right: 10px;
+}
+.block-button {
+  margin-left: auto;
+  padding-right: 10px;
+}
+
+.admin-user {
+  font-size: 10px;
+}
+.button-messages {
+  background-color: #b1f2ff;
+  color: black;
+  border: none;
+  padding: 5px 8px;
+  cursor: pointer;
+  opacity: 0.9;
+  font-weight: bold;
+  border-radius: 50px;
+}
+
+.button-messages p {
+  font-size: 11px;
 }
 </style>
