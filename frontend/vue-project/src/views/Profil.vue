@@ -1,5 +1,6 @@
 <script>
 import Nav from "../components/Nav.vue";
+import AllUsers from "../components/AllUsers.vue";
 export default {
   name: "Profil",
   data() {
@@ -9,6 +10,7 @@ export default {
   },
   components: {
     Nav,
+    AllUsers,
   },
   methods: {
     deleteProfil() {
@@ -96,6 +98,9 @@ export default {
       </div>
       <h3 class="title-equipe">L'équipe de travail</h3>
     </div>
+    <div>
+      <AllUsers />
+    </div>
   </section>
 </template>
 
@@ -115,6 +120,7 @@ h3 {
 
 .title-equipe {
   font-size: 25px;
+  margin: 20px 0;
 }
 
 .block-profil {
