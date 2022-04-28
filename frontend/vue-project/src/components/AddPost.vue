@@ -33,6 +33,7 @@ export default {
         method: "POST",
         body: postString,
         headers: {
+          "Accept": "application/json",
           "Content-type": "application/json",
           Authorization: `Bearer ${userLocalStorageToken.token}`,
         },
