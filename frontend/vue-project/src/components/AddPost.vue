@@ -12,7 +12,7 @@ export default {
   },
   methods: {
     recupImage(e) {
-      console.log(e);
+      console.log(e.target.files[0]);
       this.post.image = e.target.files[0].name;
     },
     async addPost() {
@@ -20,9 +20,11 @@ export default {
         localStorage.getItem("login-user")
       );
       const post = {
-        post_title: this.post.title,
-        post_message: this.post.message,
-        post_image: this.post.image,
+        post: {
+          post_title: this.post.title,
+          post_message: this.post.message,
+          post_image: this.post.image,
+        },
       };
       const postString = JSON.stringify(post);
 
