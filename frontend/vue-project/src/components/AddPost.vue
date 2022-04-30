@@ -6,7 +6,7 @@ export default {
       post: {
         title: "",
         message: "",
-        image: "",
+        image: null,
         // post_userId:"",
       },
     };
@@ -39,24 +39,50 @@ export default {
       console.log(post);
       // formData.append("userId", this.post.post_userId);
 
+      const postSansimage = new FormData();
+      postSansimage.append("post_title", this.post.title);
+      postSansimage.append("post_message", this.post.message);
+      console.log(postSansimage);
 
-      //fetch post 
-      //* Créer un post
-      await fetch(`http://localhost:3000/api/post/`,{
-        method: "POST",
-        body: post,
-        headers: {
-          
-          Authorization: `Bearer ${userLocalStorageToken.token}`,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data);
+      if (this.post.image !== null) {
+        
+        //fetch post
+        //* Créer un post
+        await fetch(`http://localhost:3000/api/post/`,{
+          method: "POST",
+          body: post,
+          headers: {
+  
+            Authorization: `Bearer ${userLocalStorageToken.token}`,
+          },
         })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      } else {
+        await fetch(`http://localhost:3000/api/post/`,{
+          method: "POST",
+          body: postSansimage,
+          headers: {
+  
+            Authorization: `Bearer ${userLocalStorageToken.token}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+      }
+
+
     },
   },
 };
