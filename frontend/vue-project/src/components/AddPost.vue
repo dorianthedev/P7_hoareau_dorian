@@ -7,34 +7,46 @@ export default {
         title: "",
         message: "",
         image: "",
+        // post_userId:"",
       },
     };
   },
+  mounted() {
+    const userLocalStorageToken = JSON.parse(
+        localStorage.getItem("login-user")
+      );
+
+      // this.post.post_userId = userLocalStorageToken.userId
+      // console.log(this.post.post_userId );
+  },
   methods: {
+    //recuperer les data de l'image
     recupImage(e) {
       console.log(e.target.files[0]);
-      this.post.image = e.target.files[0].name;
+      this.post.image = e.target.files[0];
     },
+
     async addPost() {
       const userLocalStorageToken = JSON.parse(
         localStorage.getItem("login-user")
       );
-      const post = {
-        post: {
-          post_title: this.post.title,
-          post_message: this.post.message,
-          post_image: this.post.image,
-        },
-      };
-      const postString = JSON.stringify(post);
 
-      console.log(postString);
-      await fetch(`http://localhost:3000/api/post/`, {
+      // methode FormData
+      const post = new FormData();
+      post.append("post_title", this.post.title);
+      post.append("post_message", this.post.message);
+      post.append("image", this.post.image);
+      console.log(post);
+      // formData.append("userId", this.post.post_userId);
+
+
+      //fetch post 
+      //* Créer un post
+      await fetch(`http://localhost:3000/api/post/`,{
         method: "POST",
-        body: postString,
+        body: post,
         headers: {
-          "Accept": "application/json",
-          "Content-type": "application/json",
+          
           Authorization: `Bearer ${userLocalStorageToken.token}`,
         },
       })
@@ -117,8 +129,7 @@ input[type="text"] {
   background: #f1f1f1;
 }
 
-input[type="text"]:focus,
-input[type="password"]:focus {
+input[type="text"]:focus {
   background-color: #ddd;
   outline: none;
 }
@@ -137,7 +148,6 @@ hr {
   margin: 8px 0;
   border: none;
   cursor: pointer;
-  width: 40%;
   opacity: 0.9;
   font-weight: bold;
   border-radius: 50px;
