@@ -15,6 +15,9 @@ export default {
     };
   },
   methods: {
+    addPost(post){
+      this.post.unshift(post)
+    },
     deleteAPost(postId) {
       const userLocalStorageToken = JSON.parse(
         localStorage.getItem("login-user")
@@ -87,10 +90,10 @@ export default {
           <div class="block-post__message">
             <p>Message: {{ post.post_message }}</p>
           </div>
-          <div class="block-post__image">
+          <div class="block-post__image" v-if="post.post_image !== null">
             <img
               class="image"
-              v-if="post.post_image"
+              
               :src="post.post_image"
               alt="photo"
             />
