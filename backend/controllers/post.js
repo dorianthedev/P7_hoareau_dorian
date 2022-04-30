@@ -56,7 +56,7 @@ exports.createPost = async (req, res, next) => {
 
     // Besoin d'utiliser un json.parse
     
-    const postObject = JSON.parse(req.body.post);
+    const postObject = req.body;
     console.log("possstobject");
     console.log(postObject);
     
