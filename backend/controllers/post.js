@@ -253,25 +253,44 @@ exports.deletePost = async (req, res, next) => {
                     if (userIdLocals == results[0].post_userId) {
                         console.log("authorisation pour delete");
 
-                        const filename = results[0].post_image.split('/images/')[1];
+                        if (results[0].post_image !== null) {
+                            
+                            const filename = results[0].post_image.split('/images/')[1];
+                            fs.unlink(`images/${filename}`, () => {
+                                const querySqlDelete = `
+                                DELETE FROM post
+                                WHERE id_post = ?
+                                `;
+    
+                                const valuesDelete = [id];
+                                
+                                mysqlconnection.query(querySqlDelete, valuesDelete, (error, results) => {
+                                    if (error) {
+                                        res.status(500).json({error});
+                                    } else {
+                                        res.status(201).json({message : "OK SUPPRIMER dnas la base de données", results});
+                                    }
+                                });
+                            });
+                        } 
+                                const querySqlDelete = `
+                                DELETE FROM post
+                                WHERE id_post = ?
+                                `;
+    
+                                const valuesDelete = [id];
+                                
+                                mysqlconnection.query(querySqlDelete, valuesDelete, (error, results) => {
+                                    if (error) {
+                                        res.status(500).json({error});
+                                    } else {
+                                        res.status(201).json({message : "OK SUPPRIMER dnas la base de données", results});
+                                    }
+                                });
+                            
+                        
 
                         // supprime l'image de notre server aussi
-                        fs.unlink(`images/${filename}`, () => {
-                            const querySqlDelete = `
-                            DELETE FROM post
-                            WHERE id_post = ?
-                            `;
-
-                            const valuesDelete = [id];
-                            
-                            mysqlconnection.query(querySqlDelete, valuesDelete, (error, results) => {
-                                if (error) {
-                                    res.status(500).json({error});
-                                } else {
-                                    res.status(201).json({message : "OK SUPPRIMER dnas la base de données", results});
-                                }
-                            });
-                        });
                     } else {
                         console.log("userId different de l'userId dans db");
                         res.status(403).json({message: " vous n'êtes pas autorisé à UPPRIMER les données"})
