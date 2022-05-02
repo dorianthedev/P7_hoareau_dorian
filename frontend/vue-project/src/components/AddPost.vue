@@ -13,11 +13,11 @@ export default {
   },
   mounted() {
     const userLocalStorageToken = JSON.parse(
-        localStorage.getItem("login-user")
-      );
+      localStorage.getItem("login-user")
+    );
 
-      // this.post.post_userId = userLocalStorageToken.userId
-      // console.log(this.post.post_userId );
+    // this.post.post_userId = userLocalStorageToken.userId
+    // console.log(this.post.post_userId );
   },
   methods: {
     //recuperer les data de l'image
@@ -45,44 +45,40 @@ export default {
       console.log(postSansimage);
 
       if (this.post.image !== null) {
-        
         //fetch post
         //* Créer un post
-        await fetch(`http://localhost:3000/api/post/`,{
+        await fetch(`http://localhost:3000/api/post/`, {
           method: "POST",
           body: post,
           headers: {
-  
             Authorization: `Bearer ${userLocalStorageToken.token}`,
           },
         })
           .then((response) => response.json())
           .then((data) => {
             console.log("Success:", data);
+            this.$emit("addPost", data.results[0]);
           })
           .catch((error) => {
             console.error("Error:", error);
           });
       } else {
-        await fetch(`http://localhost:3000/api/post/`,{
+        await fetch(`http://localhost:3000/api/post/`, {
           method: "POST",
           body: postSansimage,
           headers: {
-  
             Authorization: `Bearer ${userLocalStorageToken.token}`,
           },
         })
           .then((response) => response.json())
           .then((data) => {
             console.log("Success:", data);
+            this.$emit("addPost", data.results[0]);
           })
           .catch((error) => {
             console.error("Error:", error);
           });
-
       }
-
-
     },
   },
 };
