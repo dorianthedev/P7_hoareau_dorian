@@ -10,31 +10,44 @@ exports.createComments = (req, res, next) => {
 
         const idPost = req.params.id;
         
-        
-        const commentsObject = JSON.parse(req.body.comments);
-        console.log("commentsObject");
-        console.log(commentsObject);
-                
+        const commentsObject = req.body;
         commentsObject.comments_userId = res.locals.userId;
         commentsObject.comments_postId = idPost;
 
-
-        const comments = {
-          ...commentsObject
-          };
+        console.log("commentsObject");
+        console.log(commentsObject);
 
           mysqlconnection.query(
-            'INSERT INTO comments SET ?', comments, (error, results, fields) => {
+            'INSERT INTO comments SET ?', commentsObject, (error, results, fields) => {
                 if (error) {
                     console.log(error);
                     res.json({error});
                 } else {
-                    console.log("----> resultats");
-                    console.log(results);
-                    res.json({message : "Ton post est posté"})
+                    getOnePost(results.insertId, res)
                 }
             }
           )
+}
+
+function getOnePost(id, res) {
+
+    try {
+
+        const post = mysqlconnection.query(
+            "SELECT * FROM `comments` INNER JOIN `user` ON comments_userId = user.id WHERE `id_comments` = ?", [id],
+            (error, results) => {
+                if (error) {
+                    res.json({error});
+                } else {
+                    res.status(200).json({results})
+                }
+            }
+        );
+
+
+    } catch (err) {
+        res.status(500).json({ error: err});
+    }
 }
 
 exports.getAllComments =async (req, res) => {
