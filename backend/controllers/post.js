@@ -27,15 +27,12 @@ exports.getAllPost =async (req, res) => {
     }
 }
 
-exports.getOnePost = async (req, res, next) => {
+function getOnePost(id, res) {
 
     try {
-        const id = req.params.id;
-        console.log("---> id");
-        console.log(id);
 
-        const post = await mysqlconnection.query(
-            "SELECT * FROM `post` WHERE `id_post` = ?", [id],
+        const post = mysqlconnection.query(
+            "SELECT * FROM `post` INNER JOIN `user` ON post_userId = user.id WHERE `id_post` = ?", [id],
             (error, results) => {
                 if (error) {
                     res.json({error});
@@ -91,9 +88,7 @@ exports.createPost = async (req, res, next) => {
                     console.log(error);
                     res.json({error});
                 } else {
-                    console.log("----> resultats");
-                    console.log(results);
-                    res.json({message : "Ton post est posté"})
+                    getOnePost(results.insertId, res)
                 }
             }
         )
@@ -231,7 +226,7 @@ exports.deletePost = async (req, res, next) => {
         console.log(id);
 
         // SELECT * FROM `post` WHERE `id_post` = 1
-        const querySql = " SELECT * FROM post WHERE id_post = ?"
+        const querySql = " SELECT * FROM `post` INNER JOIN `user` ON post_userId = user.id WHERE id_post = ?"
         const post = await mysqlconnection.query(querySql, [id],
             (error, results) => {
                 if (error) {
