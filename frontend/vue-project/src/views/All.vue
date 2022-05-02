@@ -15,8 +15,8 @@ export default {
     };
   },
   methods: {
-    addPost(post){
-      this.post.unshift(post)
+    addPost(post) {
+      this.posts.unshift(post);
     },
     deleteAPost(postId) {
       const userLocalStorageToken = JSON.parse(
@@ -28,10 +28,16 @@ export default {
           Authorization: `Bearer ${userLocalStorageToken.token}`,
         },
         method: "DELETE",
-      }).then(() => {
-        alert("La publication a bien été supprimée.");
-        window.location = "/all";
-      });
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("delete", data);
+          alert("La publication a bien été supprimée.");
+          window.location = "/all";
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     },
   },
   async mounted() {
@@ -44,25 +50,28 @@ export default {
     this.userId = userLocalStorageToken.userId;
     this.admin = userLocalStorageToken.admin;
 
-    // afficher les posts sans les commentaires
-    await fetch(`http://localhost:3000/api/post`, {
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${userLocalStorageToken.token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-        if (data.message == "Echec d'authentification") {
-          this.$router.push({ name: "Login" });
-        }
-        this.posts = data.results;
-        console.log(this.posts);
+      // afficher les posts sans les commentaires
+      await fetch(`http://localhost:3000/api/post`, {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${userLocalStorageToken.token}`,
+        },
       })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          if (data.message == "Echec d'authentification") {
+            this.$router.push({ name: "Login" });
+          }
+          this.posts = data.results;
+          if (this.posts.length < 1) {
+            console.log("errror");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    
   },
 };
 </script>
@@ -71,8 +80,8 @@ export default {
   <section>
     <div>
       <Nav />
-      <AddPost />
-      <h3>Les posts des collègues</h3>
+      <AddPost @addPost="addPost" />
+      <h3 class="tilte-post-collegue">Les posts des collègues</h3>
       <div class="main-block" v-for="post in posts" :key="post.id_post">
         <div class="block-post">
           <div class="block-post__user-and-create">
@@ -82,7 +91,6 @@ export default {
             <div class="block-post__user">
               <p>De: {{ post.firstName }} {{ post.lastName }}</p>
             </div>
-            
           </div>
           <div class="block-post__title">
             <p>Titre: {{ post.post_title }}</p>
@@ -91,20 +99,13 @@ export default {
             <p>Message: {{ post.post_message }}</p>
           </div>
           <div class="block-post__image" v-if="post.post_image !== null">
-            <img
-              class="image"
-              
-              :src="post.post_image"
-              alt="photo"
-            />
+            <img class="image" :src="post.post_image" alt="photo" />
           </div>
           <div
             class="bandeaubtn"
             v-if="post.id == userId || this.admin == 1 || this.admin == true"
           >
-            <button class="modify">
-              <p>Modifier</p>
-            </button>
+            
             <button class="delete" @click="deleteAPost(post.id_post)">
               <p>Supprimer</p>
             </button>
@@ -125,25 +126,21 @@ export default {
 .main-block {
   display: flex;
   justify-content: center;
-  
 }
 
 .block-post {
   margin-bottom: 20px;
   height: auto;
   border-radius: 25px;
-  width:100%;
+  width: 100%;
   max-width: 600px;
   padding: 10px;
-  background-color: rgba(0, 0, 0, 0.10);
+  background-color: rgba(0, 0, 0, 0.1);
 }
-
-
 
 .block-post__create {
   font-size: 10px;
 }
-
 
 h3 {
   text-align: center;
@@ -152,7 +149,7 @@ h3 {
   text-transform: uppercase;
 }
 .block-post__image {
-  width: inherit ;
+  width: inherit;
   height: 200px;
 }
 
