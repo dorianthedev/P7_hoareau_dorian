@@ -30,9 +30,11 @@ router.delete('/:id',authentification, postController.deletePost) // supprimer u
 
 //pour les commentaires
 
-router.post('/:id/comments',authentification, multer, commentsController.createComments)
+router.post('/:id/comments',authentification, multer, commentsController.createComments) // creer commentaires
 
-router.delete('/:id/comments',authentification, multer, commentsController.deleteComments)
+router.delete('/:id/comments',authentification, multer, commentsController.deleteComments) // supprimer commentaires
+
+router.get('/:id/comments',authentification, commentsController.getAllComments) // supprimer commentaires
 
 
 // exportation du module
