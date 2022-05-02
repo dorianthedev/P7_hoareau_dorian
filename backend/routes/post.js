@@ -23,7 +23,6 @@ router.post('/',authentification, multer, postController.createPost); // créer 
 
 router.get('/', authentification, postController.getAllPost); // afficher tout les post
 
-router.get('/:id', authentification, postController.getOnePost); // afficher un post unique grâce à son id post
 
 router.put('/:id',authentification, multer, postController.updatePost) // modifier une sauce grâce à son id
 
