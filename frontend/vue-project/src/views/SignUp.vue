@@ -7,25 +7,12 @@ export default {
       lastName: "",
       email: "",
       password: "",
-      admin: "",
+      admin: false,
     };
   },
   methods: {
     async signup() {
-      // const user = {
-      //   firstName: this.firstName,
-      //   lastName: this.lastName,
-      //   email: this.email,
-      //   password: this.password,
-      //   admin: this.admin
-      // }
-      // const radioAdmin = document.querySelector('#admin');
-
-      // if (radioAdmin.checked == true) {
-      //   user.admin = 1;
-      // } else {
-      //   user.admin = 0;
-      // }
+      
 
       //-----------RegEx------------//
 
@@ -189,9 +176,7 @@ export default {
         required
       />
 
-      <input type="checkbox" v-model="admin" id="admin" name="admin" />
-      <label for="admin">Admin ou non ?</label>
-      <hr />
+      
 
       <button type="submit" v-on:click="signup" class="registerbtn">
         Créer mon compte
