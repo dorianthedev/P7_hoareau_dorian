@@ -37,6 +37,26 @@ exports.createComments = (req, res, next) => {
           )
 }
 
+exports.getAllComments =async (req, res) => {
+    const userIdLocals = res.locals.userId;
+    const token = res.locals.token;
+
+    try {
+        const comments = await mysqlconnection.query(
+            "SELECT * FROM `comments` INNER JOIN `user` ON comments_userId = user.id  WHERE ?", ["1"],
+            (error, results) => {
+                if (error) {
+                    res.json({error});
+                } else {
+                    res.status(200).json({results, userIdLocals, token})
+                }
+            }
+        );
+    } catch (err) {
+        res.status(500).json({ error: err});
+    }
+}
+
 
 exports.deleteComments = (req, res, next) => {
 
