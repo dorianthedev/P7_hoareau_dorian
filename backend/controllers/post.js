@@ -51,18 +51,12 @@ function getOnePost(id, res) {
 
 exports.createPost = async (req, res, next) => {
 
-    // Besoin d'utiliser un json.parse
     
     const postObject = req.body;
     console.log("possstobject");
     console.log(postObject);
     
     postObject.post_userId = res.locals.userId;
-    // les variables dans postObject
-    // const post = {
-    //     ...postObject,
-    //     post_image: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
-    //     };
     
     function test0() {
         if (req.file) {
