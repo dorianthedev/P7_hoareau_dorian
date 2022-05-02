@@ -226,14 +226,14 @@ exports.deletePost = async (req, res, next) => {
         console.log(id);
 
         // SELECT * FROM `post` WHERE `id_post` = 1
-        const querySql = " SELECT * FROM `post` INNER JOIN `user` ON post_userId = user.id WHERE id_post = ?"
+        const querySql = " SELECT * FROM `post` WHERE id_post = ?"
         const post = await mysqlconnection.query(querySql, [id],
             (error, results) => {
                 if (error) {
                     res.json({error});
                 } else {
-                    // controle si objet dans la base de donnée
 
+                    // controle si objet dans la base de donnée
                     if (results != 0) {
                         console.log("presence objets dans la bd");
                     } else {
@@ -242,7 +242,6 @@ exports.deletePost = async (req, res, next) => {
                     }
 
                     // controle autorisation de la modif par userId
-
                     const userIdLocals = res.locals.userId;
 
                     if (userIdLocals == results[0].post_userId) {
