@@ -34,7 +34,7 @@ router.post('/:id/comments',authentification, multer, commentsController.createC
 
 router.delete('/:id/comments',authentification, multer, commentsController.deleteComments) // supprimer commentaires
 
-router.get('/:id/comments',authentification, commentsController.getAllComments) // supprimer commentaires
+router.get('/comments',authentification, commentsController.getAllComments) // tout les commentaires
 
 
 // exportation du module
