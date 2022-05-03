@@ -13,8 +13,8 @@ export default {
 <template>
   <section class="block-nav">
     <nav>
-      <router-link to="/all">Post |</router-link>
-      <router-link to="/profil">Profil |</router-link>
+      <router-link to="/all">Post</router-link>
+      <router-link to="/profil">Profil</router-link>
       <a v-on:click="logout" href="">Déconnexion</a>
     </nav>
   </section>
@@ -28,22 +28,23 @@ export default {
 }
 
 a, router-link {
-  color: black;
   text-decoration: none;
+  background-color: #ffd7d7;
+  color: black;
+  padding: 7px 10px;
+  border: none;
+  cursor: pointer;
   font-weight: bold;
+  border-radius: 50px;
+  font-size: 12px ;
 }
 
-a:hover {
-  color: red;
-}
+
 
 .block-nav {
   display: flex;
   justify-content: center;
   padding: 10px 0;
-  
-    background-color: #F0F6F6;
-
 }
 
 nav {
