@@ -88,7 +88,7 @@ export default {
   <section>
     <form v-on:submit.prevent="onSubmit">
       <div class="container">
-        <label for="message"><h3>Ecrire un post</h3></label>
+        <label for="message"><h3>Mon Post</h3></label>
         <input
           type="text"
           v-model="post.title"
@@ -117,6 +117,7 @@ export default {
         </button>
       </div>
     </form>
+    <div class="separe"></div>
   </section>
 </template>
 
@@ -133,7 +134,6 @@ h3 {
   max-width: 600px;
   margin: 0 auto;
   text-align: center;
-  border: 3px solid black;
   border-radius: 30px;
 }
 
@@ -145,15 +145,20 @@ h3 {
 input[type="text"] {
   width: 90%;
   padding: 15px;
-  margin: 5px 0 22px 0;
+  margin: 5px 0 10px 0;
   display: inline-block;
   border: none;
   background: #f1f1f1;
+  border-radius: 25px;
 }
 
 input[type="text"]:focus {
   background-color: #ddd;
   outline: none;
+}
+
+input[id="title"] {
+  width: 65%;
 }
 
 /* Overwrite default styles of hr */
@@ -166,8 +171,8 @@ hr {
 .registerbtn {
   background-color: #ffd7d7;
   color: black;
-  padding: 16px 20px;
-  margin: 8px 0;
+  padding: 10px 17px;
+  margin: 3px 0px;
   border: none;
   cursor: pointer;
   opacity: 0.9;
@@ -182,5 +187,15 @@ hr {
 /* Add a blue text color to links */
 a {
   color: dodgerblue;
+}
+
+.separe {
+  margin: 10px 0;
+  height: 10px;
+  background-color: black;
+}
+.separe2 {
+  height: 10px;
+  background-color: black;
 }
 </style>
