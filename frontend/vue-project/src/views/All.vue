@@ -1,6 +1,7 @@
 <script>
 import Nav from "../components/Nav.vue";
 import AddPost from "../components/AddPost.vue";
+
 export default {
   name: "All",
   components: {
@@ -12,6 +13,7 @@ export default {
       userId: "",
       admin: "",
       posts: [],
+      commentaires: "",
     };
   },
   methods: {
@@ -50,28 +52,50 @@ export default {
     this.userId = userLocalStorageToken.userId;
     this.admin = userLocalStorageToken.admin;
 
-      // afficher les posts sans les commentaires
-      await fetch(`http://localhost:3000/api/post`, {
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${userLocalStorageToken.token}`,
-        },
+    // afficher les posts sans les commentaires
+    await fetch(`http://localhost:3000/api/post`, {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${userLocalStorageToken.token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+        if (data.message == "Echec d'authentification") {
+          this.$router.push({ name: "Login" });
+        }
+        this.posts = data.results;
+        if (this.posts.length < 1) {
+          console.log("errror");
+        }
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data);
-          if (data.message == "Echec d'authentification") {
-            this.$router.push({ name: "Login" });
-          }
-          this.posts = data.results;
-          if (this.posts.length < 1) {
-            console.log("errror");
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+    //afficher les comm
+    // afficher les posts sans les commentaires
+    await fetch(`http://localhost:3000/api/post/comments`, {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${userLocalStorageToken.token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+        if (data.message == "Echec d'authentification") {
+          this.$router.push({ name: "Login" });
+        }
+        this.commentaires = data.results;
+        if (this.commentaires.length < 1) {
+          console.log("aucun com");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   },
 };
 </script>
@@ -79,8 +103,13 @@ export default {
 <template>
   <section>
     <div>
+      <!-- NAVBAR -->
       <Nav />
+      <!-- NAVBAR -->
+      <!-- ADDPOST -->
       <AddPost @addPost="addPost" />
+      <!-- ADDPOST -->
+      <!-- AFFICHER LE POST -->
       <h3 class="tilte-post-collegue">Les posts des collègues</h3>
       <div class="main-block" v-for="post in posts" :key="post.id_post">
         <div class="block-post">
@@ -105,13 +134,40 @@ export default {
             class="bandeaubtn"
             v-if="post.id == userId || this.admin == 1 || this.admin == true"
           >
-            
             <button class="delete" @click="deleteAPost(post.id_post)">
               <p>Supprimer</p>
             </button>
           </div>
         </div>
+        <!--Créer un COMMENTAIRES -->
+
+        <!-- Fin Créer un COMMENTAIRES -->
+        <!-- Afficher LES COMMENTAIRES -->
+        <section class="main-block-comments">
+          <div class="block-title-comments">
+            <h5>Les commentaires</h5>
+            <!-- <p>Afficher les commentaires &#9660;</p> -->
+          </div>
+          <div
+            v-for="commentaire in commentaires"
+            :key="commentaire.comments_postId"
+          >
+            <div
+              class="main-block-user-comments"
+              v-if="commentaire.comments_postId == post.id_post"
+            >
+              <div class="block-user-comments">
+                <p>{{ commentaire.firstName }} {{ commentaire.lastName }}</p>
+              </div>
+              <div class="block-message-comments">
+                <p>{{ commentaire.comments_messsage }}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- FIN Afficher LES COMMENTAIRES -->
       </div>
+      <!-- Fin AFFICHER LE POST -->
     </div>
   </section>
 </template>
@@ -125,11 +181,11 @@ export default {
 
 .main-block {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .block-post {
-  margin-bottom: 20px;
   height: auto;
   border-radius: 25px;
   width: 100%;
@@ -179,5 +235,47 @@ h3 {
   color: white;
   font-weight: bold;
   border-radius: 50px;
+}
+
+/* Les commentaires*/
+
+.cache {
+  display: flex;
+}
+
+.main-block-comments {
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 1px solid black;
+  width: 100%;
+  max-width: 580px;
+  border-radius: 25px;
+  margin-bottom: 20px;
+}
+
+h5 {
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.block-title-comments p {
+  text-align: center;
+  font-style: italic;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.main-block-user-comments {
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: 10px 10px;
+  background-color: white;
+  text-align: center;
+}
+
+.block-user-comments p {
+  font-weight: bold;
+  font-size: 12px;
+  color: rgb(3, 173, 173);
 }
 </style>
