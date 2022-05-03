@@ -260,21 +260,23 @@ exports.deletePost = async (req, res, next) => {
                                     }
                                 });
                             });
-                        } 
-                                const querySqlDelete = `
-                                DELETE FROM post
-                                WHERE id_post = ?
-                                `;
-    
-                                const valuesDelete = [id];
-                                
-                                mysqlconnection.query(querySqlDelete, valuesDelete, (error, results) => {
-                                    if (error) {
-                                        res.status(500).json({error});
-                                    } else {
-                                        res.status(201).json({message : "OK SUPPRIMER dnas la base de données", results});
-                                    }
-                                });
+                        } else {
+
+                            const querySqlDelete = `
+                            DELETE FROM post
+                            WHERE id_post = ?
+                            `;
+
+                            const valuesDelete = [id];
+                            
+                            mysqlconnection.query(querySqlDelete, valuesDelete, (error, results) => {
+                                if (error) {
+                                    res.status(500).json({error});
+                                } else {
+                                    res.status(201).json({message : "OK SUPPRIMER dnas la base de données", results});
+                                }
+                            });
+                        }
                             
                         
 
