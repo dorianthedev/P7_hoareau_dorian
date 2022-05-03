@@ -14,6 +14,7 @@ export default {
       admin: "",
       posts: [],
       commentaires: "",
+      commentsMessage: "",
     };
   },
   methods: {
@@ -40,6 +41,35 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
         });
+    },
+    async postComments(postId){
+      const userLocalStorageToken = JSON.parse(
+        localStorage.getItem("login-user")
+      );
+        
+        console.log(this.commentsMessage);
+
+      await fetch(`http://localhost:3000/api/post/${postId}/comments`, {
+          method: "POST",
+          body: JSON.stringify({
+            comments_messsage: this.commentsMessage,
+          }),
+          headers: {
+            
+            "Content-type": "application/json",
+            Authorization: `Bearer ${userLocalStorageToken.token}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+            window.location = "/all";
+
+
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
     },
   },
   async mounted() {
@@ -140,6 +170,27 @@ export default {
           </div>
         </div>
         <!--Créer un COMMENTAIRES -->
+        <section>
+          <form v-on:submit.prevent="onSubmit">
+            <div class="container">
+              <label for="comments"></label>
+              <input
+                type="text"
+                v-model="commentsMessage"
+                placeholder="Votre commentaire"
+                name="comments"
+                id="comments"
+              />
+              <button
+                type="submit"
+                @click="postComments(post.id_post)"
+                class="registerbtn"
+              >
+                Envoyer
+              </button>
+            </div>
+          </form>
+        </section>
 
         <!-- Fin Créer un COMMENTAIRES -->
         <!-- Afficher LES COMMENTAIRES -->
