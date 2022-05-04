@@ -170,7 +170,7 @@ export default {
           </div>
         </div>
         <!--Créer un COMMENTAIRES -->
-        <section>
+        <section class="main-block-create-comments">
           <form v-on:submit.prevent="onSubmit">
             <div class="container">
               <label for="comments"></label>
