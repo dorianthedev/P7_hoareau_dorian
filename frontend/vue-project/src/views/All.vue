@@ -42,34 +42,31 @@ export default {
           console.error("Error:", error);
         });
     },
-    async postComments(postId){
+    async postComments(postId) {
       const userLocalStorageToken = JSON.parse(
         localStorage.getItem("login-user")
       );
-        
-        console.log(this.commentsMessage);
+
+      console.log(this.commentsMessage);
 
       await fetch(`http://localhost:3000/api/post/${postId}/comments`, {
-          method: "POST",
-          body: JSON.stringify({
-            comments_messsage: this.commentsMessage,
-          }),
-          headers: {
-            
-            "Content-type": "application/json",
-            Authorization: `Bearer ${userLocalStorageToken.token}`,
-          },
+        method: "POST",
+        body: JSON.stringify({
+          comments_messsage: this.commentsMessage,
+        }),
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${userLocalStorageToken.token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          window.location = "/all";
         })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log("Success:", data);
-            window.location = "/all";
-
-
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     },
   },
   async mounted() {
@@ -184,7 +181,7 @@ export default {
               <button
                 type="submit"
                 @click="postComments(post.id_post)"
-                class="registerbtn"
+                class="btn-post-comments"
               >
                 Envoyer
               </button>
@@ -212,6 +209,16 @@ export default {
               </div>
               <div class="block-message-comments">
                 <p>{{ commentaire.comments_messsage }}</p>
+              </div>
+              <div
+                class="bandeaubtn"
+                v-if="
+                  commentaire.comments_userId == userId
+                "
+              >
+                <button class="deleteComments">
+                  <p>Supprimer</p>
+                </button>
               </div>
             </div>
           </div>
@@ -328,5 +335,45 @@ h5 {
   font-weight: bold;
   font-size: 12px;
   color: rgb(3, 173, 173);
+}
+
+/* CREER Les commentaires*/
+
+.main-block-create-comments {
+  max-width: 580px;
+  width: 100%;
+  text-align: center;
+}
+
+.main-block-create-comments input[type="text"] {
+  padding: 15px;
+  margin: 5px 0 10px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+  border-radius: 25px;
+}
+
+.main-block-create-comments input[type="text"]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+.btn-post-comments {
+  background-color: #ffd7d7;
+  color: black;
+  padding: 10px 17px;
+  margin: 3px 0px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.9;
+  font-weight: bold;
+  border-radius: 50px;
+}
+
+.bandeaubtn .deleteComments {
+  background-color: rgb(186, 0, 0);
+  font-size: 12px;
+  padding: 5px 5px;
+  margin: 0px 0px 5px 0;
 }
 </style>
