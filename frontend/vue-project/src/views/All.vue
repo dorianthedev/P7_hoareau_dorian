@@ -68,6 +68,27 @@ export default {
           console.error("Error:", error);
         });
     },
+    deleteAComments(commentsId) {
+      const userLocalStorageToken = JSON.parse(
+        localStorage.getItem("login-user")
+      );
+      fetch(`http://localhost:3000/api/post/${commentsId}/comments`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userLocalStorageToken.token}`,
+        },
+        method: "DELETE",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("delete", data);
+          alert("La publication a bien été supprimée.");
+          window.location = "/all";
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
   },
   async mounted() {
     const userLocalStorageToken = JSON.parse(
@@ -216,7 +237,7 @@ export default {
                   commentaire.comments_userId == userId
                 "
               >
-                <button class="deleteComments">
+                <button class="deleteComments" @click="deleteAComments(commentaire.id_comments)">
                   <p>Supprimer</p>
                 </button>
               </div>
@@ -241,6 +262,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 40px;
 }
 
 .block-post {
@@ -346,12 +368,12 @@ h5 {
 }
 
 .main-block-create-comments input[type="text"] {
-  padding: 15px;
-  margin: 5px 0 10px 0;
-  display: inline-block;
-  border: none;
-  background: #f1f1f1;
-  border-radius: 25px;
+    padding: 15px;
+    margin: 5px 0px 10px 0px;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+    border-radius: 25px;
 }
 
 .main-block-create-comments input[type="text"]:focus {
