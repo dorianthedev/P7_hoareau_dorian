@@ -42,17 +42,17 @@ export default {
           console.error("Error:", error);
         });
     },
-    async postComments(postId) {
+    async postComments(post) {
       const userLocalStorageToken = JSON.parse(
         localStorage.getItem("login-user")
       );
 
       console.log(this.commentsMessage);
 
-      await fetch(`http://localhost:3000/api/post/${postId}/comments`, {
+      await fetch(`http://localhost:3000/api/post/${post.id_post}/comments`, {
         method: "POST",
         body: JSON.stringify({
-          comments_messsage: this.commentsMessage,
+          comments_messsage: post.comment,
         }),
         headers: {
           "Content-type": "application/json",
@@ -194,14 +194,14 @@ export default {
               <label for="comments"></label>
               <input
                 type="text"
-                v-model="commentsMessage"
+                v-model="post.comment"
                 placeholder="Votre commentaire"
                 name="comments"
                 id="comments"
               />
               <button
                 type="submit"
-                @click="postComments(post.id_post)"
+                @click="postComments(post)"
                 class="btn-post-comments"
               >
                 Envoyer
