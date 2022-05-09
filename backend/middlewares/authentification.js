@@ -15,6 +15,7 @@ module.exports = (req, res, next) => {
         
       res.locals.userId = userId; // renvoyer au controller suivant
       res.locals.token = token;
+      res.locals.admin = decodedToken.admin
 
       
         next();
