@@ -88,11 +88,7 @@ exports.signup = (req, res) => {
 //login pour chercher et connect un user qui est dans la base de donnée
 
 exports.login = (req, res, next) => {
-    console.log("--> Contenu login: req.body.email ");
-    console.log(req.body.email);
-
-    console.log("--> Contenu login: req.body.email ");
-    console.log(req.body.password);
+    
 
     //chiffrer l'email de la requete
     const emailCryptoJs = cryptojs.HmacSHA256(req.body.email, `${process.env.CRYPTOJS_EMAIL}`).toString();
@@ -135,7 +131,7 @@ exports.login = (req, res, next) => {
                         // génération du token JWT
                         const token = jwt.sign(
                             // 3 arguments
-                            {userId: results[0].id},
+                            {userId: results[0].id, admin:results[0].admin},
                             `${process.env.JWT_KEY_TOKEN}`,
                             {expiresIn: "1h"}
 
