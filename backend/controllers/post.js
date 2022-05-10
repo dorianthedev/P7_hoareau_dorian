@@ -238,8 +238,10 @@ exports.deletePost = async (req, res, next) => {
                     // controle autorisation de la modif par userId
                     const userIdLocals = res.locals.userId;
 
-                    if (userIdLocals == results[0].post_userId) {
+
+                    if (userIdLocals == results[0].post_userId || res.locals.admin == 1 || res.locals.admin == true) {
                         console.log("authorisation pour delete");
+                        console.log(res.locals.admin);
 
                         if (results[0].post_image !== null) {
                             
@@ -283,7 +285,7 @@ exports.deletePost = async (req, res, next) => {
                         // supprime l'image de notre server aussi
                     } else {
                         console.log("userId different de l'userId dans db");
-                        res.status(403).json({message: " vous n'êtes pas autorisé à UPPRIMER les données"})
+                        res.status(403).json({message: "vous n'êtes pas autorisé à UPPRIMER les données"})
                     }
                 }
             }
