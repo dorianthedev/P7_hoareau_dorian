@@ -35,8 +35,14 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           console.log("delete", data);
-          alert("La publication a bien été supprimée.");
-          window.location = "/all";
+          if (
+            (data.message = "vous n'êtes pas autorisé à UPPRIMER les données")
+          ) {
+            alert("vous n'êtes pas autorisé à supprimer le post");
+          } else {
+            alert("La publication a bien été supprimée.");
+            window.location = "/all";
+          }
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -63,6 +69,8 @@ export default {
         .then((data) => {
           console.log("Success:", data);
           window.location = "/all";
+
+          
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -82,8 +90,15 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           console.log("delete", data);
-          alert("La publication a bien été supprimée.");
-          window.location = "/all";
+          if (
+            (data.message = "OK SUPPRIMER commentaires dans la base de données")
+          ) {
+            alert("Le commentaire a bien été supprimée.");
+            window.location = "/all";
+          } else {
+            alert("vous n'êtes pas autorisé à supprimer le commentaires");
+            window.location = "/all";
+          }
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -137,9 +152,9 @@ export default {
           this.$router.push({ name: "Login" });
         }
         this.commentaires = data.results;
-        if (this.commentaires.length < 1) {
-          console.log("aucun com");
-        }
+        // if (this.commentaires.length < 1) {
+        //   console.log("aucun com");
+        // }
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -234,10 +249,15 @@ export default {
               <div
                 class="bandeaubtn"
                 v-if="
-                  commentaire.comments_userId == userId
+                  commentaire.comments_userId == userId ||
+                  this.admin == 1 ||
+                  this.admin == true
                 "
               >
-                <button class="deleteComments" @click="deleteAComments(commentaire.id_comments)">
+                <button
+                  class="deleteComments"
+                  @click="deleteAComments(commentaire.id_comments)"
+                >
                   <p>Supprimer</p>
                 </button>
               </div>
@@ -368,12 +388,12 @@ h5 {
 }
 
 .main-block-create-comments input[type="text"] {
-    padding: 15px;
-    margin: 5px 0px 10px 0px;
-    display: inline-block;
-    border: none;
-    background: #f1f1f1;
-    border-radius: 25px;
+  padding: 15px;
+  margin: 5px 0px 10px 0px;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+  border-radius: 25px;
 }
 
 .main-block-create-comments input[type="text"]:focus {
