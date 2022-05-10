@@ -98,7 +98,7 @@ exports.deleteComments = (req, res, next) => {
 
                 const userIdLocals = res.locals.userId;
 
-                if (userIdLocals == results[0].comments_userId) {
+                if (userIdLocals == results[0].comments_userId || res.locals.admin == 1 || res.locals.admin == true) {
                     console.log("authorisation pour delete");
 
                     // supprime l'image de notre server aussi
@@ -119,7 +119,7 @@ exports.deleteComments = (req, res, next) => {
                     
                 } else {
                     console.log("userId different de l'userId dans db");
-                    res.status(403).json({message: " vous n'êtes pas autorisé à UPPRIMER les données"})
+                    res.status(403).json({message: " vous n'êtes pas autorisé à SUPPRIMER les données"})
                 }
             }
         }
