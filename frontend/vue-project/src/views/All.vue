@@ -130,9 +130,7 @@ export default {
           this.$router.push({ name: "Login" });
         }
         this.posts = data.results;
-        if (this.posts.length < 1) {
-          console.log("errror");
-        }
+        
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -174,7 +172,9 @@ export default {
       <AddPost @addPost="addPost" />
       <!-- ADDPOST -->
       <!-- AFFICHER LE POST -->
-      <h3 class="tilte-post-collegue">Les posts des collègues</h3>
+      <h3 v-if="this.posts.length >= 1" class="tilte-post-collegue">Les posts des collègues</h3>
+      <h3 v-else-if="this.posts.length < 1" class="tilte-post-collegue">O post à afficher</h3>
+
       <div class="main-block" v-for="post in posts" :key="post.id_post">
         <div class="block-post">
           <div class="block-post__user-and-create">
