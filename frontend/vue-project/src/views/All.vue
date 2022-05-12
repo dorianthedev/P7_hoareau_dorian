@@ -35,14 +35,11 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           console.log("delete", data);
-          if (
-            (data.message = "OK SUPPRIMER dnas la base de données")
-          ) {
+          if ((data.message = "OK SUPPRIMER dnas la base de données")) {
             alert("La publication a bien été supprimée.");
             window.location = "/all";
           } else {
             alert("vous n'êtes pas autorisé à supprimer le post");
-            
           }
         })
         .catch((error) => {
@@ -70,8 +67,6 @@ export default {
         .then((data) => {
           console.log("Success:", data);
           window.location = "/all";
-
-          
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -130,7 +125,6 @@ export default {
           this.$router.push({ name: "Login" });
         }
         this.posts = data.results;
-        
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -172,8 +166,12 @@ export default {
       <AddPost @addPost="addPost" />
       <!-- ADDPOST -->
       <!-- AFFICHER LE POST -->
-      <h3 v-if="this.posts.length >= 1" class="tilte-post-collegue">Les posts des collègues</h3>
-      <h3 v-else-if="this.posts.length < 1" class="tilte-post-collegue">O post à afficher</h3>
+      <h3 v-if="this.posts.length >= 1" class="tilte-post-collegue">
+        Les posts des collègues
+      </h3>
+      <h3 v-else-if="this.posts.length < 1" class="tilte-post-collegue">
+        O post à afficher
+      </h3>
 
       <div class="main-block" v-for="post in posts" :key="post.id_post">
         <div class="block-post">
@@ -182,14 +180,22 @@ export default {
               <p>Créer le {{ post.post_date }}</p>
             </div>
             <div class="block-post__user">
-              <p>De: {{ post.firstName }} {{ post.lastName }}</p>
+              <p>
+                <span
+                  ><img
+                    class="img-user"
+                    src="../assets/User_icon_BLACK-01.png"
+                    alt=""
+                /></span>
+                {{ post.firstName }} {{ post.lastName }}
+              </p>
             </div>
           </div>
           <div class="block-post__title">
-            <p>Titre: {{ post.post_title }}</p>
+            <p>{{ post.post_title }}</p>
           </div>
           <div class="block-post__message">
-            <p>Message: {{ post.post_message }}</p>
+            <p>{{ post.post_message }}</p>
           </div>
           <div class="block-post__image" v-if="post.post_image !== null">
             <img class="image" :src="post.post_image" alt="photo" />
@@ -202,32 +208,31 @@ export default {
               <p>Supprimer</p>
             </button>
           </div>
-        </div>
-        <!--Créer un COMMENTAIRES -->
-        <section class="main-block-create-comments">
-          <form v-on:submit.prevent="onSubmit">
-            <div class="container">
-              <label for="comments"></label>
-              <input
-                type="text"
-                v-model="post.comment"
-                placeholder="Votre commentaire"
-                name="comments"
-                id="comments"
-              />
-              <button
-                type="submit"
-                @click="postComments(post)"
-                class="btn-post-comments"
-              >
-                Envoyer
-              </button>
-            </div>
-          </form>
-        </section>
+          <!--Créer un COMMENTAIRES -->
+          <section class="main-block-create-comments">
+            <form v-on:submit.prevent="onSubmit">
+              <div class="container">
+                <label for="comments"></label>
+                <input
+                  type="text"
+                  v-model="post.comment"
+                  placeholder="Votre commentaire"
+                  name="comments"
+                  id="comments"
+                />
+                <button
+                  type="submit"
+                  @click="postComments(post)"
+                  class="btn-post-comments"
+                >
+                  Envoyer
+                </button>
+              </div>
+            </form>
+          </section>
 
-        <!-- Fin Créer un COMMENTAIRES -->
-        <!-- Afficher LES COMMENTAIRES -->
+          <!-- Fin Créer un COMMENTAIRES -->
+          <!-- Afficher LES COMMENTAIRES -->
         <section class="main-block-comments">
           <div class="block-title-comments">
             <h5>Les commentaires</h5>
@@ -266,6 +271,9 @@ export default {
           </div>
         </section>
         <!-- FIN Afficher LES COMMENTAIRES -->
+        </div>
+
+        
       </div>
       <!-- Fin AFFICHER LE POST -->
     </div>
@@ -284,6 +292,7 @@ export default {
   flex-direction: column;
   align-items: center;
   margin-bottom: 40px;
+  padding: 0px 10px;
 }
 
 .block-post {
@@ -317,6 +326,13 @@ h3 {
   border-radius: 25px;
 }
 
+.block-post__message {
+  background-color: white;
+  padding: 4px 8px;
+  border-radius: 25px;
+  margin-bottom: 15px;
+}
+
 .bandeaubtn {
   display: flex;
   justify-content: center;
@@ -336,6 +352,18 @@ h3 {
   color: white;
   font-weight: bold;
   border-radius: 50px;
+}
+
+/* image user */
+.img-user {
+  width: 18px;
+  background-color: white;
+  border-radius: 25px;
+}
+
+.block-post__title p {
+  font-weight: 600;
+  font-size: 25px;
 }
 
 /* Les commentaires*/
@@ -393,9 +421,12 @@ h5 {
   margin: 5px 0px 10px 0px;
   display: inline-block;
   border: none;
-  background: #f1f1f1;
+  background: white;
   border-radius: 25px;
 }
+
+
+
 
 .main-block-create-comments input[type="text"]:focus {
   background-color: #ddd;
