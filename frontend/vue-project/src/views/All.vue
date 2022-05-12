@@ -36,12 +36,13 @@ export default {
         .then((data) => {
           console.log("delete", data);
           if (
-            (data.message = "vous n'êtes pas autorisé à UPPRIMER les données")
+            (data.message = "OK SUPPRIMER dnas la base de données")
           ) {
-            alert("vous n'êtes pas autorisé à supprimer le post");
-          } else {
             alert("La publication a bien été supprimée.");
             window.location = "/all";
+          } else {
+            alert("vous n'êtes pas autorisé à supprimer le post");
+            
           }
         })
         .catch((error) => {
@@ -53,7 +54,7 @@ export default {
         localStorage.getItem("login-user")
       );
 
-      console.log(this.commentsMessage);
+      // console.log(this.commentsMessage);
 
       await fetch(`http://localhost:3000/api/post/${post.id_post}/comments`, {
         method: "POST",
@@ -306,12 +307,12 @@ h3 {
 }
 .block-post__image {
   width: inherit;
-  height: 200px;
+  height: auto;
 }
 
 .image {
   width: inherit;
-  height: 200px;
+  height: auto;
   object-fit: cover;
   border-radius: 25px;
 }
