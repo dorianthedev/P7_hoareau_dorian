@@ -117,7 +117,6 @@ export default {
         </button>
       </div>
     </form>
-    <div class="separe"></div>
   </section>
 </template>
 
@@ -189,11 +188,7 @@ a {
   color: dodgerblue;
 }
 
-.separe {
-  margin: 10px 0;
-  height: 10px;
-  background-color: black;
-}
+
 .separe2 {
   height: 10px;
   background-color: black;
