@@ -31,53 +31,58 @@ export default {
         localStorage.getItem("login-user")
       );
 
-      // methode FormData
-      const post = new FormData();
-      post.append("post_title", this.post.title);
-      post.append("post_message", this.post.message);
-      post.append("image", this.post.image);
-      console.log(post);
       // formData.append("userId", this.post.post_userId);
 
-      const postSansimage = new FormData();
-      postSansimage.append("post_title", this.post.title);
-      postSansimage.append("post_message", this.post.message);
-      console.log(postSansimage);
+      if (this.post.title !== "" && this.post.message !== "") {
+        if (this.post.image !== null) {
+          // methode FormData
+          const post = new FormData();
+          post.append("post_title", this.post.title);
+          post.append("post_message", this.post.message);
+          post.append("image", this.post.image);
+          console.log(post);
 
-      if (this.post.image !== null) {
-        //fetch post
-        //* Créer un post
-        await fetch(`http://localhost:3000/api/post/`, {
-          method: "POST",
-          body: post,
-          headers: {
-            Authorization: `Bearer ${userLocalStorageToken.token}`,
-          },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log("Success:", data);
-            this.$emit("addPost", data.results[0]);
+          //fetch post
+          //* Créer un post
+          await fetch(`http://localhost:3000/api/post/`, {
+            method: "POST",
+            body: post,
+            headers: {
+              Authorization: `Bearer ${userLocalStorageToken.token}`,
+            },
           })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
-      } else {
-        await fetch(`http://localhost:3000/api/post/`, {
-          method: "POST",
-          body: postSansimage,
-          headers: {
-            Authorization: `Bearer ${userLocalStorageToken.token}`,
-          },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log("Success:", data);
-            this.$emit("addPost", data.results[0]);
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("Success:", data);
+              this.$emit("addPost", data.results[0]);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        } else {
+          // methode FormData
+          const postSansimage = new FormData();
+          postSansimage.append("post_title", this.post.title);
+          postSansimage.append("post_message", this.post.message);
+          console.log(postSansimage);
+
+          //fetch
+          await fetch(`http://localhost:3000/api/post/`, {
+            method: "POST",
+            body: postSansimage,
+            headers: {
+              Authorization: `Bearer ${userLocalStorageToken.token}`,
+            },
           })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("Success:", data);
+              this.$emit("addPost", data.results[0]);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        }
       }
     },
   },
@@ -187,7 +192,6 @@ hr {
 a {
   color: dodgerblue;
 }
-
 
 .separe2 {
   height: 10px;
