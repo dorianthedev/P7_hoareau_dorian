@@ -52,25 +52,26 @@ export default {
       );
 
       // console.log(this.commentsMessage);
-
-      await fetch(`http://localhost:3000/api/post/${post.id_post}/comments`, {
-        method: "POST",
-        body: JSON.stringify({
-          comments_messsage: post.comment,
-        }),
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${userLocalStorageToken.token}`,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data);
-          window.location = "/all";
+      if (this.commentsMessage !== "") {
+        await fetch(`http://localhost:3000/api/post/${post.id_post}/comments`, {
+          method: "POST",
+          body: JSON.stringify({
+            comments_messsage: post.comment,
+          }),
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${userLocalStorageToken.token}`,
+          },
         })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+            window.location = "/all";
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
     },
     deleteAComments(commentsId) {
       const userLocalStorageToken = JSON.parse(
@@ -219,6 +220,7 @@ export default {
                   placeholder="Votre commentaire"
                   name="comments"
                   id="comments"
+                  required
                 />
                 <button
                   type="submit"
@@ -366,7 +368,7 @@ h3 {
   border-radius: 25px;
 }
 .img-user2 {
-    width: 15px;
+  width: 15px;
 }
 
 .block-post__title p {
