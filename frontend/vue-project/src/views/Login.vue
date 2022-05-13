@@ -101,6 +101,7 @@ export default {
         placeholder="Votre Email"
         name="email"
         id="email"
+        required
       />
 
       <label for="psw"><b>Mot de passe</b></label>
@@ -111,6 +112,7 @@ export default {
         placeholder="Votre Mot de passe"
         name="psw"
         id="psw"
+        required
       />
       <hr />
 
