@@ -233,47 +233,53 @@ export default {
 
           <!-- Fin Créer un COMMENTAIRES -->
           <!-- Afficher LES COMMENTAIRES -->
-        <section class="main-block-comments">
-          <div class="block-title-comments">
-            <h5>Les commentaires</h5>
-            <!-- <p>Afficher les commentaires &#9660;</p> -->
-          </div>
-          <div
-            v-for="commentaire in commentaires"
-            :key="commentaire.comments_postId"
-          >
+          <section class="main-block-comments">
+            <div class="block-title-comments">
+              <h5>Les commentaires</h5>
+              <!-- <p>Afficher les commentaires &#9660;</p> -->
+            </div>
             <div
-              class="main-block-user-comments"
-              v-if="commentaire.comments_postId == post.id_post"
+              v-for="commentaire in commentaires"
+              :key="commentaire.comments_postId"
             >
-              <div class="block-user-comments">
-                <p>{{ commentaire.firstName }} {{ commentaire.lastName }}</p>
-              </div>
-              <div class="block-message-comments">
-                <p>{{ commentaire.comments_messsage }}</p>
-              </div>
               <div
-                class="bandeaubtn"
-                v-if="
-                  commentaire.comments_userId == userId ||
-                  this.admin == 1 ||
-                  this.admin == true
-                "
+                class="main-block-user-comments"
+                v-if="commentaire.comments_postId == post.id_post"
               >
-                <button
-                  class="deleteComments"
-                  @click="deleteAComments(commentaire.id_comments)"
+                <div class="block-user-comments">
+                  <p>
+                    <span
+                      ><img
+                        class="img-user2"
+                        src="../assets/User_icon_BLACK-01.png"
+                        alt=""
+                    /></span>
+                    {{ commentaire.firstName }} {{ commentaire.lastName }}
+                  </p>
+                </div>
+                <div class="block-message-comments">
+                  <p>{{ commentaire.comments_messsage }}</p>
+                </div>
+                <div
+                  class="bandeaubtn"
+                  v-if="
+                    commentaire.comments_userId == userId ||
+                    this.admin == 1 ||
+                    this.admin == true
+                  "
                 >
-                  <p>Supprimer</p>
-                </button>
+                  <button
+                    class="deleteComments"
+                    @click="deleteAComments(commentaire.id_comments)"
+                  >
+                    <p>Supprimer</p>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-        <!-- FIN Afficher LES COMMENTAIRES -->
+          </section>
+          <!-- FIN Afficher LES COMMENTAIRES -->
         </div>
-
-        
       </div>
       <!-- Fin AFFICHER LE POST -->
     </div>
@@ -329,7 +335,6 @@ h3 {
 .block-post__message {
   background-color: white;
   padding: 4px 8px;
-  border-radius: 25px;
   margin-bottom: 15px;
 }
 
@@ -359,6 +364,9 @@ h3 {
   width: 18px;
   background-color: white;
   border-radius: 25px;
+}
+.img-user2 {
+    width: 15px;
 }
 
 .block-post__title p {
@@ -399,7 +407,7 @@ h5 {
   border-radius: 10px;
   margin: 10px 10px;
   background-color: white;
-  text-align: center;
+  padding: 0px 10px;
 }
 
 .block-user-comments p {
@@ -424,9 +432,6 @@ h5 {
   background: white;
   border-radius: 25px;
 }
-
-
-
 
 .main-block-create-comments input[type="text"]:focus {
   background-color: #ddd;
