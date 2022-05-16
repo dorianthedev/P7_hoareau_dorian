@@ -52,7 +52,7 @@ export default {
       );
 
       // console.log(this.commentsMessage);
-      if (this.commentsMessage !== "") {
+      if (post.comment !== "") {
         await fetch(`http://localhost:3000/api/post/${post.id_post}/comments`, {
           method: "POST",
           body: JSON.stringify({
@@ -178,7 +178,7 @@ export default {
         <div class="block-post">
           <div class="block-post__user-and-create">
             <div class="block-post__create">
-              <p>Créer le {{ post.post_date }}</p>
+              <p>Créer le {{ post.date }}</p>
             </div>
             <div class="block-post__user">
               <p>
