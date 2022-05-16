@@ -9,10 +9,7 @@ module.exports = (req, res, next) => {
       const token = req.headers.authorization.split(' ')[1];
       const decodedToken = jwt.verify(token, `${process.env.JWT_KEY_TOKEN}`);      
       const userId = decodedToken.userId;
-      
-      
-      console.log(decodedToken);
-        
+              
       res.locals.userId = userId; // renvoyer au controller suivant
       res.locals.token = token;
       res.locals.admin = decodedToken.admin
