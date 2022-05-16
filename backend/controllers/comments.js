@@ -14,13 +14,11 @@ exports.createComments = (req, res, next) => {
         commentsObject.comments_userId = res.locals.userId;
         commentsObject.comments_postId = idPost;
 
-        console.log("commentsObject");
-        console.log(commentsObject);
+        
 
           mysqlconnection.query(
             'INSERT INTO comments SET ?', commentsObject, (error, results, fields) => {
                 if (error) {
-                    console.log(error);
                     res.json({error});
                 } else {
                     getOnePost(results.insertId, res)
@@ -75,8 +73,7 @@ exports.deleteComments = (req, res, next) => {
 
   try {
     const id = req.params.id;
-    console.log("--->id");
-    console.log(id);
+    
 
     // SELECT * FROM `post` WHERE `id_post` = 1
     const querySql = " SELECT * FROM comments WHERE id_comments = ?"
@@ -90,7 +87,6 @@ exports.deleteComments = (req, res, next) => {
                 if (results != 0) {
                     console.log("presence objets dans la bd");
                 } else {
-                    console.log("objet non present dans la bd");
                     return res.status(404).json({message : "pas d'objet à supprimer dans la bdd"})
                 }
 
@@ -99,7 +95,6 @@ exports.deleteComments = (req, res, next) => {
                 const userIdLocals = res.locals.userId;
 
                 if (userIdLocals == results[0].comments_userId || res.locals.admin == 1 || res.locals.admin == true) {
-                    console.log("authorisation pour delete");
 
                     // supprime l'image de notre server aussi
                         const querySqlDelete = `
@@ -118,7 +113,6 @@ exports.deleteComments = (req, res, next) => {
                         });
                     
                 } else {
-                    console.log("userId different de l'userId dans db");
                     res.status(403).json({message: " vous n'êtes pas autorisé à SUPPRIMER les données"})
                 }
             }
