@@ -18,7 +18,7 @@ ligne de commande npm install
 - Pour démarrer le back, exécuter la
 ligne de commande nodemon server ou node server
 
-2. Variables d'environnement
+2. Variables d'environnement ( si projet download sur github)
 - fichier .env .envexample
 supprimer le .example et remplir les données par vos clé unique ( ne les perdait pas et ne plus les modifier,
 sous perine de ne plus pouvoir récupérer les données)
@@ -39,6 +39,10 @@ mysql> CREATE DATABASE groupomania;
 pour importer la base de données MySQL à partir d'un fichier SQL.
 
 $ mysql -uUSERNAME -p DB_NAME < import_file.sql
+
+- Un compte admin déjà créé avec les clé de base dans le .env
+email: admin@gmail.com
+password: Admin46admin
 
 
 4. Les différentes routes du backend
