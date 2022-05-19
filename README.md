@@ -41,7 +41,7 @@ pour importer la base de données MySQL à partir d'un fichier SQL.
 
 $ mysql -uUSERNAME -p DB_NAME < import_file.sql
 
-- Un compte admin déjà créé avec les clé de base dans le .env
+- Un compte admin déjà créé avec les clé de base dans le .env, pas avec les nouvelles clé que vous avez ajouté dans le .envexample et ensuite delete example
 email: admin@gmail.com
 password: Admin46admin
 
