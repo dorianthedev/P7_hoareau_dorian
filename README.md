@@ -10,6 +10,7 @@ Lancement du Backend et Frontend
 ligne de commande npm install
 - Pour démarrer le front, exécuter la
 ligne de commande npm run dev
+ --port 5050
 
 # Backend
 1. Installation
@@ -17,6 +18,7 @@ ligne de commande npm run dev
 ligne de commande npm install
 - Pour démarrer le back, exécuter la
 ligne de commande nodemon server ou node server
+ --port 3000
 
 2. Variables d'environnement ( si projet download sur github)
 - fichier .env .envexample
