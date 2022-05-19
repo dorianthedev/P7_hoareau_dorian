@@ -5,20 +5,20 @@ Lancement du Backend et Frontend
 3. vuejs (frontend)
 4. mysql (backend/database)
 
-# Frontend
+# Frontend --port 5050
 - A partir du dossier frontend, exécuter la
 ligne de commande npm install
 - Pour démarrer le front, exécuter la
 ligne de commande npm run dev
- --port 5050
+ 
 
-# Backend
+# Backend --port 3000
 1. Installation
 - A partir du dossier backend, exécuter la
 ligne de commande npm install
 - Pour démarrer le back, exécuter la
 ligne de commande nodemon server ou node server
- --port 3000
+ 
 
 2. Variables d'environnement ( si projet download sur github)
 - fichier .env .envexample
