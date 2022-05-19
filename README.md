@@ -27,8 +27,7 @@ sous perine de ne plus pouvoir récupérer les données)
 
 
 3. Importer la base de donnée
-- importer database.sql
-path: ./database.sql
+Importer database.sql
 
 - Alors, créons d'abord une base de données MySQL. Connectez-vous à votre serveur MySQL à l'aide de la commande ci-dessous.
 $ mysql -u USERNAME -p;
