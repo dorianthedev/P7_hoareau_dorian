@@ -17,7 +17,7 @@ ligne de commande npm run dev
 - A partir du dossier backend, exécuter la
 ligne de commande npm install
 - Pour démarrer le back, exécuter la
-ligne de commande nodemon server ou node server
+ligne de commande node server
  
 
 2. Variables d'environnement ( si projet download sur github)
