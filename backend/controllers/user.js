@@ -22,9 +22,7 @@ const { log } = require("console");
 
 exports.signup = (req, res) => {
   const { firstName, lastName, email, password, admin } = req.body;
-  console.log("ecmascript 2017");
-  console.log(email);
-  console.log(password);
+  
 
   // chiffrer l'email avant de l'envoyer de la base de donnée
   const emailCryptoJs = cryptojs
@@ -35,11 +33,7 @@ exports.signup = (req, res) => {
   bcrypt
     .hash(password, 10) // 10 = salt = nombre de fois hash algorithme
     .then((hash) => {
-      // console log crypt
-      console.log("e-mail cryptojs");
-      console.log(emailCryptoJs);
-      console.log("hash password");
-      console.log(hash);
+      
 
       // créer un objet contenue les data clients pour envoyer dans la base de donnée
       const user = {
@@ -49,8 +43,7 @@ exports.signup = (req, res) => {
         password: hash,
         admin: admin,
       };
-      console.log("----> contenu user");
-      console.log(user);
+      
 
       // requete sql pour envoyer les données dans la table user de la base de donnée
       mysqlconnection.query(
