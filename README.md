@@ -20,13 +20,8 @@ ligne de commande npm install
 ligne de commande node server
  
 
-2. Variables d'environnement ( si projet download sur github)
-- fichier .env .envexample
-supprimer le .example et remplir les données par vos clé unique ( ne les perdait pas et ne plus les modifier,
-sous perine de ne plus pouvoir récupérer les données)
 
-
-3. Importer la base de donnée
+2. Importer la base de donnée
 Importer database.sql
 
 - Alors, créons d'abord une base de données MySQL. Connectez-vous à votre serveur MySQL à l'aide de la commande ci-dessous.
@@ -41,11 +36,8 @@ pour importer la base de données MySQL à partir d'un fichier SQL.
 
 $ mysql -uUSERNAME -p DB_NAME < import_file.sql
 
-- Un compte admin déjà créé avec les clé de base dans le .env, pas avec les nouvelles clé que vous avez ajouté dans le .envexample et ensuite delete example
-email: admin@gmail.com
-password: Admin46admin
+ OU POUR FAIRE PLUS SIMPLE
+ - copié collé toutes les requêtes et faites éxécuter.
 
-
-4. Les différentes routes du backend
 
 
