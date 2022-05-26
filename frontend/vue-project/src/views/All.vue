@@ -66,7 +66,8 @@ export default {
           .then((response) => response.json())
           .then((data) => {
             console.log("Success:", data);
-            window.location = "/all";
+            this.commentaires.push(data.results[0]);
+
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -132,7 +133,7 @@ export default {
       });
 
     //afficher les comm
-    // afficher les posts sans les commentaires
+    // afficher les posts avec commentaires
     await fetch(`http://localhost:3000/api/post/comments`, {
       headers: {
         "Content-type": "application/json",
