@@ -40,4 +40,6 @@ $ mysql -uUSERNAME -p DB_NAME < import_file.sql
  - copié collé toutes les requêtes et faites éxécuter.
 
 
-
+3. identifiant et mot de passe admin
+email: admin@gmail.com
+password: Admin46admin
