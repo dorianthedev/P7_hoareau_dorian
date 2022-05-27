@@ -16,13 +16,10 @@ export default {
       localStorage.getItem("login-user")
     );
 
-    // this.post.post_userId = userLocalStorageToken.userId
-    // console.log(this.post.post_userId );
   },
   methods: {
     //recuperer les data de l'image
     recupImage(e) {
-      console.log(e.target.files[0]);
       this.post.image = e.target.files[0];
     },
 
@@ -40,7 +37,6 @@ export default {
           post.append("post_title", this.post.title);
           post.append("post_message", this.post.message);
           post.append("image", this.post.image);
-          console.log(post);
 
           //fetch post
           //* Créer un post
@@ -53,7 +49,6 @@ export default {
           })
             .then((response) => response.json())
             .then((data) => {
-              console.log("Success:", data);
               this.$emit("addPost", data.results[0]);
             })
             .catch((error) => {
@@ -64,7 +59,6 @@ export default {
           const postSansimage = new FormData();
           postSansimage.append("post_title", this.post.title);
           postSansimage.append("post_message", this.post.message);
-          console.log(postSansimage);
 
           //fetch
           await fetch(`http://localhost:3000/api/post/`, {
@@ -76,7 +70,6 @@ export default {
           })
             .then((response) => response.json())
             .then((data) => {
-              console.log("Success:", data);
               this.$emit("addPost", data.results[0]);
             })
             .catch((error) => {

@@ -60,7 +60,6 @@ export default {
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log("Success connect:", data);
             localStorage.setItem("login-user", JSON.stringify(data));
 
             if (data.error) {

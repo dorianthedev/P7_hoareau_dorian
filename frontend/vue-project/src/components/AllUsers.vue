@@ -24,12 +24,10 @@ export default {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
         if (data.message == "Echec d'authentification") {
           this.$router.push({ name: "SignUp" });
         }
         this.users = data.results;
-        console.log(this.users);
       })
       .catch((error) => {
         console.error("Error:", error);

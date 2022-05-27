@@ -35,7 +35,6 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("delete", data);
           if ((data.message = "OK SUPPRIMER dnas la base de données")) {
             alert("La publication a bien été supprimée.");
             window.location = "/all";
@@ -66,7 +65,6 @@ export default {
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log("Success:", data);
             this.commentaires.push(data.results[0]);
 
           })
@@ -125,7 +123,6 @@ export default {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
         if (data.message == "Echec d'authentification") {
           this.$router.push({ name: "Login" });
         }
@@ -144,7 +141,6 @@ export default {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
         if (data.message == "Echec d'authentification") {
           this.$router.push({ name: "Login" });
         }

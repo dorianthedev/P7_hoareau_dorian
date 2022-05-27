@@ -28,7 +28,6 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-            console.log("delete", data);
           alert("La profil a bien été supprimée.");
           localStorage.clear();
           this.$router.push({ name: "SignUp" });
@@ -53,7 +52,6 @@ export default {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
         if (data.message == "Echec d'authentification") {
           this.$router.push({ name: "SignUp" });
         }
