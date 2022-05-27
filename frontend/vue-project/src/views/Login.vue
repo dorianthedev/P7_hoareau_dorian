@@ -88,6 +88,11 @@ export default {
 };
 </script>
 
+
+
+
+
+
 <template>
   <form v-on:submit.prevent="onSubmit">
     <div class="container">
@@ -129,6 +134,10 @@ export default {
     </div>
   </form>
 </template>
+
+
+
+
 
 <style scoped>
 #app {

@@ -21,6 +21,7 @@ export default {
     addPost(post) {
       this.posts.unshift(post);
     },
+    //SUPPRIMER UN POST
     deleteAPost(postId) {
       const userLocalStorageToken = JSON.parse(
         localStorage.getItem("login-user")
@@ -46,12 +47,12 @@ export default {
           console.error("Error:", error);
         });
     },
+    // POSTER UN COMMENTAIRE
     async postComments(post) {
       const userLocalStorageToken = JSON.parse(
         localStorage.getItem("login-user")
       );
 
-      // console.log(this.commentsMessage);
       if (post.comment !== "") {
         await fetch(`http://localhost:3000/api/post/${post.id_post}/comments`, {
           method: "POST",
@@ -74,6 +75,7 @@ export default {
           });
       }
     },
+    // SUPPRIMER UN COMMENTAIRES
     deleteAComments(commentsId) {
       const userLocalStorageToken = JSON.parse(
         localStorage.getItem("login-user")
@@ -103,6 +105,7 @@ export default {
         });
     },
   },
+  // AFFICHER LES POSTS - AFFICHER LES COMMENTAIRES
   async mounted() {
     const userLocalStorageToken = JSON.parse(
       localStorage.getItem("login-user")
@@ -132,8 +135,7 @@ export default {
         console.error("Error:", error);
       });
 
-    //afficher les comm
-    // afficher les posts avec commentaires
+    //afficher les commentaires
     await fetch(`http://localhost:3000/api/post/comments`, {
       headers: {
         "Content-type": "application/json",
@@ -147,9 +149,7 @@ export default {
           this.$router.push({ name: "Login" });
         }
         this.commentaires = data.results;
-        // if (this.commentaires.length < 1) {
-        //   console.log("aucun com");
-        // }
+        
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -168,13 +168,16 @@ export default {
       <AddPost @addPost="addPost" />
       <!-- ADDPOST -->
       <!-- AFFICHER LE POST -->
+        <!-- si il y a des posts -->
       <h3 v-if="this.posts.length >= 1" class="tilte-post-collegue">
         Les posts des collègues
       </h3>
+        <!-- si il n'y a pas de post -->
       <h3 v-else-if="this.posts.length < 1" class="tilte-post-collegue">
         O post à afficher
       </h3>
 
+      <!-- boucle for pour chercher les post dans [posts] -->
       <div class="main-block" v-for="post in posts" :key="post.id_post">
         <div class="block-post">
           <div class="block-post__user-and-create">
@@ -206,6 +209,7 @@ export default {
             class="bandeaubtn"
             v-if="post.id == userId || this.admin == 1 || this.admin == true"
           >
+              <!-- supprimer un post en fonction de son id -->
             <button class="delete" @click="deleteAPost(post.id_post)">
               <p>Supprimer</p>
             </button>

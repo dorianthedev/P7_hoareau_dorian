@@ -6,12 +6,15 @@ const fs = require("fs");
 const jwt = require("jsonwebtoken");
 const { log } = require("console");
 
+// Afficher tout les post
 exports.getAllPost = async (req, res) => {
   const userIdLocals = res.locals.userId;
   const token = res.locals.token;
 
   try {
     const post = await mysqlconnection.query(
+      // date_format pour afficher correctement la date
+      // il cré une nouvelle donnée à partir du timestamp
       "SELECT *, DATE_FORMAT(post_date, '%e-%c-%y %l:%i')AS date FROM `post` INNER JOIN `user` ON post_userId = user.id  WHERE ? ORDER BY id_post DESC",
       ["1"],
       (error, results) => {
@@ -26,6 +29,8 @@ exports.getAllPost = async (req, res) => {
     res.status(500).json({ error: err });
   }
 };
+
+//Fonction récupérer un post
 
 function getOnePost(id, res) {
   try {
@@ -45,11 +50,14 @@ function getOnePost(id, res) {
   }
 }
 
+// Créer un post
 exports.createPost = async (req, res, next) => {
   const postObject = req.body;
 
+  // userId qui est stocké dans la res depuis le middlewarre authentification
   postObject.post_userId = res.locals.userId;
 
+  // fonction pour gérer l'ajout du post si il y a une image ou non
   function test0() {
     if (req.file) {
       const post = {
@@ -67,6 +75,7 @@ exports.createPost = async (req, res, next) => {
     }
   }
 
+  // requete pour ajouter le post dans la base de donnée
   mysqlconnection.query(
     "INSERT INTO post SET ?",
     test0(),
@@ -81,15 +90,17 @@ exports.createPost = async (req, res, next) => {
   );
 };
 
+// supprimer un post
 exports.deletePost = async (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
   const decodedToken = jwt.verify(token, `${process.env.JWT_KEY_TOKEN}`);
   const userId = decodedToken.userId;
 
   try {
+    // id du post qui est dans le l'url
     const id = req.params.id;
 
-    // SELECT * FROM `post` WHERE `id_post` = 1
+    // Sélectionner le post qu'on veut supprimer
     const querySql = " SELECT * FROM `post` WHERE id_post = ?";
     const post = await mysqlconnection.query(
       querySql,
@@ -107,7 +118,7 @@ exports.deletePost = async (req, res, next) => {
               .json({ message: "pas d'objet à supprimer dans la bdd" });
           }
 
-          // controle autorisation de la modif par userId
+          // controle autorisation de la modif par userId 
           const userIdLocals = res.locals.userId;
 
           if (
@@ -117,6 +128,8 @@ exports.deletePost = async (req, res, next) => {
           ) {
             if (results[0].post_image !== null) {
               const filename = results[0].post_image.split("/images/")[1];
+              // unlick pour supprimer dans le server
+              // requetes pour supprimer le post après l'avoir sélectionner avec son id
               fs.unlink(`images/${filename}`, () => {
                 const querySqlDelete = `
                                 DELETE FROM post
