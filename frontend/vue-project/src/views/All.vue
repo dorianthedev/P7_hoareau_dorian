@@ -214,9 +214,9 @@ export default {
           <section class="main-block-create-comments">
             <form v-on:submit.prevent="onSubmit">
               <div class="container">
-                <label for="comments"></label>
                 <input
                   type="text"
+                  aria-label="écire un commentaire"
                   v-model="post.comment"
                   placeholder="Votre commentaire"
                   name="comments"

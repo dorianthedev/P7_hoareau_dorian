@@ -89,6 +89,7 @@ export default {
         <label for="message"><h3>Mon Post</h3></label>
         <input
           type="text"
+          aria-label="Titre du post"
           v-model="post.title"
           placeholder="Titre important"
           name="title"
@@ -97,6 +98,7 @@ export default {
         />
         <input
           type="text"
+          aria-label="Contenu du post"
           v-model="post.message"
           placeholder="Votre message"
           name="message"
@@ -105,6 +107,7 @@ export default {
         />
         <input
           type="file"
+          aria-label="Ajoute une image"
           v-on:change="recupImage"
           id="addFile"
           name="addFile"

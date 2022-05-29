@@ -236,13 +236,14 @@ hr {
 /* Set a style for the submit/register button */
 .registerbtn {
   background-color: #04aa6d;
-  color: white;
+  color: black;
   padding: 16px 20px;
   margin: 8px 0;
   border: none;
   cursor: pointer;
   width: 100%;
   opacity: 0.9;
+  font-weight: bold;
 }
 
 .registerbtn:hover {
@@ -251,7 +252,8 @@ hr {
 
 /* Add a blue text color to links */
 a {
-  color: dodgerblue;
+  color: black;
+  font-weight: bold;
 }
 
 /* Set a grey background color and center the text of the "sign in" section */
